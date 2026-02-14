@@ -13,18 +13,21 @@ datasource db {
 }
 
 model Artist {
-  id       String  @id @default(uuid())
-  name     String  @unique
+  id       String   @id @default(uuid())
+  name     String   @unique
   imageUrl String?
   bio      String?
-  verified Boolean @default(false)
+  verified Boolean  @default(false)
 
-  songs  Song[]
-  albums Album[]
+  songs     Song[]
+  albums    Album[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Album {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
   imageUrl    String?
   releaseYear Int
@@ -32,6 +35,9 @@ model Album {
   artistId String
   artist   Artist @relation(fields: [artistId], references: [id])
   songs    Song[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Playlist {
