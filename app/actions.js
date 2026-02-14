@@ -19,9 +19,15 @@ export async function getSongs(limit = 50, genre = null) {
       take: limit,
     });
 
+    console.log(`✅ Fetched ${songs.length} songs`);
     return songs;
   } catch (error) {
-    console.error("Error fetching songs:", error);
+    console.error("❌ Error fetching songs:", error);
+    console.error("Error details:", {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
     return [];
   }
 }

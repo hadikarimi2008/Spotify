@@ -69,14 +69,28 @@ export async function changePassword(userId, currentPassword, newPassword) {
 export async function uploadProfilePicture(formDataInput, userId) {
   try {
     if (!formDataInput) {
+      console.error("❌ No form data provided");
       return { success: false, error: "No form data provided" };
+    }
+
+    if (!userId) {
+      console.error("❌ No user ID provided");
+      return { success: false, error: "User ID is required" };
     }
 
     const file = formDataInput.get("file");
 
     if (!file || !(file instanceof File)) {
+      console.error("❌ No file provided or invalid file type:", typeof file);
       return { success: false, error: "No file provided or invalid file" };
     }
+
+    console.log("📤 Uploading file:", {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      userId,
+    });
 
     // Validate image type
     const validImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
@@ -128,14 +142,22 @@ export async function uploadProfilePicture(formDataInput, userId) {
 
     const fileUrl = `/users/${filename}`;
 
+    console.log("✅ File saved, updating database...");
+
     // Update user profile
     try {
       await prisma.user.update({
         where: { id: userId },
         data: { image: fileUrl },
       });
+      console.log("✅ Database updated successfully");
     } catch (dbError) {
-      console.error("Error updating database:", dbError);
+      console.error("❌ Error updating database:", dbError);
+      console.error("Database error details:", {
+        code: dbError.code,
+        message: dbError.message,
+        userId,
+      });
       // Try to delete the uploaded file if database update fails
       try {
         const { unlink } = await import("fs/promises");
@@ -143,14 +165,20 @@ export async function uploadProfilePicture(formDataInput, userId) {
       } catch (unlinkError) {
         console.error("Error deleting file after DB error:", unlinkError);
       }
-      return { success: false, error: "Failed to update profile in database" };
+      return { success: false, error: `Failed to update profile in database: ${dbError.message || "Unknown error"}` };
     }
 
     revalidatePath("/dashboard");
     revalidatePath("/");
+    console.log("✅ Profile picture uploaded successfully:", fileUrl);
     return { success: true, url: fileUrl, filename: filename };
   } catch (error) {
-    console.error("Error uploading profile picture:", error);
+    console.error("❌ Error uploading profile picture:", error);
+    console.error("Upload error details:", {
+      message: error.message,
+      stack: error.stack,
+      userId,
+    });
     return { success: false, error: `Failed to upload: ${error.message || "Unknown error"}` };
   }
 }
@@ -182,6 +210,33 @@ export async function getFavoriteSongs(userId) {
 
 export async function addToFavorites(userId, songId) {
   try {
+    if (!userId || !songId) {
+      return { success: false, error: "User ID and Song ID are required" };
+    }
+
+    // Check if song exists
+    const song = await prisma.song.findUnique({
+      where: { id: songId },
+    });
+
+    if (!song) {
+      return { success: false, error: "Song not found" };
+    }
+
+    // Check if already in favorites
+    const existing = await prisma.favoriteSong.findUnique({
+      where: {
+        userId_songId: {
+          userId,
+          songId,
+        },
+      },
+    });
+
+    if (existing) {
+      return { success: false, error: "Song already in favorites" };
+    }
+
     const favorite = await prisma.favoriteSong.create({
       data: {
         userId,
@@ -200,11 +255,18 @@ export async function addToFavorites(userId, songId) {
     revalidatePath("/dashboard");
     return { success: true, data: favorite.song };
   } catch (error) {
+    console.error("Error adding to favorites:", error);
+    console.error("Error details:", {
+      code: error.code,
+      message: error.message,
+      userId,
+      songId,
+    });
+    
     if (error.code === "P2002") {
       return { success: false, error: "Song already in favorites" };
     }
-    console.error("Error adding to favorites:", error);
-    return { success: false, error: "Failed to add to favorites" };
+    return { success: false, error: `Failed to add to favorites: ${error.message || "Unknown error"}` };
   }
 }
 

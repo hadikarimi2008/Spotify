@@ -11,14 +11,12 @@ export default async function sitemap() {
         orderBy: { updatedAt: "desc" },
       }),
       prisma.artist.findMany({
-        select: { id: true, updatedAt: true },
+        select: { id: true },
         take: 500,
-        orderBy: { updatedAt: "desc" },
       }),
       prisma.album.findMany({
-        select: { id: true, updatedAt: true },
+        select: { id: true },
         take: 500,
-        orderBy: { updatedAt: "desc" },
       }),
     ]);
 
@@ -31,14 +29,14 @@ export default async function sitemap() {
 
     const artistUrls = artists.map((artist) => ({
       url: `${baseUrl}/share/artist/${artist.id}`,
-      lastModified: artist.updatedAt,
+      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
     }));
 
     const albumUrls = albums.map((album) => ({
       url: `${baseUrl}/share/album/${album.id}`,
-      lastModified: album.updatedAt,
+      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
     }));

@@ -70,6 +70,12 @@ export default function HeroSection() {
 
   const toggleFavorite = useCallback(async (song) => {
     if (!session?.user?.id) {
+      console.warn("⚠️ Cannot toggle favorite: User not logged in");
+      return;
+    }
+
+    if (!song || !song.id) {
+      console.error("❌ Cannot toggle favorite: Invalid song data");
       return;
     }
 
@@ -77,6 +83,7 @@ export default function HeroSection() {
 
     try {
       if (isFavorite) {
+        console.log("🗑️ Removing from favorites:", song.id);
         const result = await removeFromFavorites(session.user.id, song.id);
         if (result.success) {
           setFavoriteIds(prev => {
@@ -88,8 +95,12 @@ export default function HeroSection() {
           if (typeof window !== "undefined") {
             window.dispatchEvent(new CustomEvent("favoriteUpdated", { detail: { songId: song.id, added: false } }));
           }
+          console.log("✅ Removed from favorites");
+        } else {
+          console.error("❌ Failed to remove from favorites:", result.error);
         }
       } else {
+        console.log("➕ Adding to favorites:", song.id);
         const result = await addToFavorites(session.user.id, song.id);
         if (result.success) {
           setFavoriteIds(prev => new Set(prev).add(song.id));
@@ -97,10 +108,20 @@ export default function HeroSection() {
           if (typeof window !== "undefined") {
             window.dispatchEvent(new CustomEvent("favoriteUpdated", { detail: { songId: song.id, added: true, song: result.data } }));
           }
+          console.log("✅ Added to favorites");
+        } else {
+          console.error("❌ Failed to add to favorites:", result.error);
+          alert(result.error || "Failed to add to favorites");
         }
       }
     } catch (error) {
-      console.error("Error toggling favorite:", error);
+      console.error("❌ Error toggling favorite:", error);
+      console.error("Error details:", {
+        message: error.message,
+        songId: song.id,
+        userId: session.user.id,
+      });
+      alert("An error occurred. Please check the console for details.");
     }
   }, [session?.user?.id, favoriteIds]);
 

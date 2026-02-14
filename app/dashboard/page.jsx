@@ -98,12 +98,22 @@ export default function UserDashboard() {
   const [yearInReview, setYearInReview] = useState(null);
 
   useEffect(() => {
+    console.log("🔍 Session status:", {
+      status,
+      hasSession: !!session,
+      hasUser: !!session?.user,
+      userId: session?.user?.id,
+      userEmail: session?.user?.email,
+      fullSession: session,
+      fullUser: session?.user,
+    });
+
     if (status === "unauthenticated") {
       router.push("/login");
       return;
     }
 
-    if (session?.user) {
+    if (status === "authenticated" && session?.user?.id) {
       loadData();
     }
   }, [session, status, router]);
@@ -235,7 +245,30 @@ export default function UserDashboard() {
   };
 
   const handleImageUpload = async (file) => {
-    if (!session?.user?.id || !file) {
+    // Wait for session to load
+    if (status === "loading") {
+      setError("Please wait, session is loading...");
+      return;
+    }
+
+    if (status === "unauthenticated") {
+      setError("You must be logged in to upload a profile picture");
+      router.push("/login");
+      return;
+    }
+
+    if (!session?.user?.id) {
+      console.error("❌ Session issue:", {
+        status,
+        session: session ? "exists" : "null",
+        userId: session?.user?.id,
+        user: session?.user,
+      });
+      setError("Session error. Please try logging out and logging back in.");
+      return;
+    }
+
+    if (!file) {
       setError("Please select a file");
       return;
     }
@@ -258,10 +291,19 @@ export default function UserDashboard() {
     setSuccess(null);
 
     try {
+      console.log("📤 Starting image upload...", {
+        fileName: file.name,
+        fileSize: file.size,
+        fileType: file.type,
+        userId: session.user.id,
+      });
+
       const formData = new FormData();
       formData.append("file", file);
 
       const result = await uploadProfilePicture(formData, session.user.id);
+
+      console.log("📥 Upload result:", result);
 
       if (result.success) {
         setProfileData({ ...profileData, image: result.url });
@@ -279,10 +321,15 @@ export default function UserDashboard() {
           router.refresh();
         }, 500);
       } else {
+        console.error("❌ Upload failed:", result.error);
         setError(result.error || "Failed to upload image");
       }
     } catch (error) {
-      console.error("Upload error:", error);
+      console.error("❌ Upload error:", error);
+      console.error("Error details:", {
+        message: error.message,
+        stack: error.stack,
+      });
       setError(error.message || "Failed to upload image. Please try again.");
     } finally {
       setUploadingImage(false);
@@ -388,16 +435,41 @@ export default function UserDashboard() {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  if (status === "loading" || loading) {
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white">Loading session...</div>
+      </div>
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white">Please log in to access your dashboard</div>
+      </div>
+    );
+  }
+
+  if (!session?.user?.id) {
+    console.error("❌ Session error: User ID missing", {
+      status,
+      session: session ? "exists" : "null",
+      user: session?.user,
+    });
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white">Session error. Please try logging out and back in.</div>
+      </div>
+    );
+  }
+
+  if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-white">Loading...</div>
       </div>
     );
-  }
-
-  if (!session?.user) {
-    return null;
   }
 
   return (
