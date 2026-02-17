@@ -12,8 +12,6 @@ export default function Home() {
         </div>
         <HeroSection />
       </div>
-      <SpotifyPlayer />
-      <MobileNavbar />
     </>
   );
 }

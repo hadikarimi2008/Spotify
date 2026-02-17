@@ -2,11 +2,12 @@
 
 import React, { useCallback } from "react";
 import Image from "next/image";
-import { Play, Heart, Share2, Verified } from "lucide-react";
+import { Play, Heart, Share2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { addToFavorites, removeFromFavorites, getFavoriteSongs } from "@/app/dashboard/actions";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import verified from "@/public/Verified/Blue-Tick.png";
 
 export default function ArtistPageClient({ artist }) {
   const { data: session } = useSession();
@@ -74,24 +75,96 @@ export default function ArtistPageClient({ artist }) {
   );
 
 
-  const handlePlaySong = useCallback((song) => {
-    if (typeof window !== "undefined" && window.playSong) {
-      window.playSong(song);
-    }
-  }, []);
+  const handlePlaySong = useCallback(
+    (song) => {
+      if (typeof window === "undefined") return;
+      
+      // Wait a bit for player to be ready
+      let attempts = 0;
+      const maxAttempts = 10;
+      
+      const tryPlay = () => {
+        attempts++;
+        if (attempts > maxAttempts) {
+          console.warn("Player not ready after multiple attempts");
+          return;
+        }
+        
+        if (window.setPlaylistAndPlay && Array.isArray(artist.songs)) {
+          const index = artist.songs.findIndex((s) => s.id === song.id);
+          window.setPlaylistAndPlay(artist.songs, index === -1 ? 0 : index);
+        } else if (window.playSong) {
+          window.playSong(song);
+        } else {
+          // Retry after a short delay if player not ready
+          setTimeout(tryPlay, 100);
+        }
+      };
+      
+      tryPlay();
+    },
+    [artist.songs]
+  );
 
   const handlePlayAll = useCallback(() => {
-    if (artist.songs.length > 0 && typeof window !== "undefined" && window.playSong) {
-      window.playSong(artist.songs[0]);
-    }
+    if (!artist.songs || artist.songs.length === 0) return;
+    if (typeof window === "undefined") return;
+    
+    // Wait a bit for player to be ready
+    let attempts = 0;
+    const maxAttempts = 10;
+    
+    const tryPlay = () => {
+      attempts++;
+      if (attempts > maxAttempts) {
+        console.warn("Player not ready after multiple attempts");
+        return;
+      }
+      
+      if (window.setPlaylistAndPlay && Array.isArray(artist.songs) && artist.songs.length > 0) {
+        window.setPlaylistAndPlay(artist.songs, 0);
+      } else if (window.playSong && artist.songs[0]) {
+        window.playSong(artist.songs[0]);
+      } else {
+        // Retry after a short delay if player not ready
+        setTimeout(tryPlay, 100);
+      }
+    };
+    
+    tryPlay();
   }, [artist.songs]);
 
-  const handlePlayAlbum = useCallback((album) => {
-    const albumSongs = artist.songs.filter((song) => song.albumId === album.id);
-    if (albumSongs.length > 0 && typeof window !== "undefined" && window.playSong) {
-      window.playSong(albumSongs[0]);
-    }
-  }, [artist.songs]);
+  const handlePlayAlbum = useCallback(
+    (album) => {
+      const albumSongs = artist.songs.filter((song) => song.albumId === album.id);
+      if (!albumSongs.length) return;
+      if (typeof window === "undefined") return;
+      
+      // Wait a bit for player to be ready
+      let attempts = 0;
+      const maxAttempts = 10;
+      
+      const tryPlay = () => {
+        attempts++;
+        if (attempts > maxAttempts) {
+          console.warn("Player not ready after multiple attempts");
+          return;
+        }
+        
+        if (window.setPlaylistAndPlay) {
+          window.setPlaylistAndPlay(albumSongs, 0);
+        } else if (window.playSong) {
+          window.playSong(albumSongs[0]);
+        } else {
+          // Retry after a short delay if player not ready
+          setTimeout(tryPlay, 100);
+        }
+      };
+      
+      tryPlay();
+    },
+    [artist.songs]
+  );
 
   const formatDuration = useCallback((seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -121,7 +194,7 @@ export default function ArtistPageClient({ artist }) {
   }, [artist.name]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white pb-44 md:pb-24">
       {/* Hero Section */}
       <div
         className="relative bg-gradient-to-b from-[#1a1a1a] to-black pb-8 md:pb-12 pt-16 md:pt-24"
@@ -155,7 +228,7 @@ export default function ArtistPageClient({ artist }) {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
                 {artist.verified && (
-                  <Verified size={24} className="text-[#1DB954]" fill="currentColor" />
+                  <Image src={verified} width={50} height={50} loading="lazy" />
                 )}
                 <h1 className="text-3xl md:text-5xl lg:text-7xl font-black truncate">
                   {artist.name}
@@ -206,7 +279,7 @@ export default function ArtistPageClient({ artist }) {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 pb-44 md:pb-32">
         {/* Albums Section */}
         {artist.albums.length > 0 && (
           <div className="mb-8 md:mb-12">
@@ -283,7 +356,7 @@ export default function ArtistPageClient({ artist }) {
                       </h4>
                       {song.album && (
                         <Link
-                          href={`/album/${song.album.id}`}
+                          href={`/share/album/${song.album.id}`}
                           onClick={(e) => e.stopPropagation()}
                           className="text-[#b3b3b3] text-[10px] md:text-xs truncate hover:underline hover:text-white block"
                         >

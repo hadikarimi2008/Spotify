@@ -115,6 +115,8 @@ export default function UserDashboard() {
 
     if (status === "authenticated" && session?.user?.id) {
       loadData();
+      // Load analytics and heavy data in background without blocking initial render
+      loadExtraData(session.user.id);
     }
   }, [session, status, router]);
 
@@ -130,33 +132,52 @@ export default function UserDashboard() {
         image: session.user.image || "",
       });
 
-      // Load favorites
-      const favoritesResult = await getFavoriteSongs(session.user.id);
+      // Load core data needed for main tabs in parallel
+      const [favoritesResult, userSongsResult, allSongsData] = await Promise.all([
+        getFavoriteSongs(session.user.id),
+        getUserSongs(session.user.id),
+        getSongs(100),
+      ]);
+
       if (favoritesResult.success) {
         setFavoriteSongs(favoritesResult.data);
       }
 
-      // Load user songs
-      const userSongsResult = await getUserSongs(session.user.id);
       if (userSongsResult.success) {
         setUserSongs(userSongsResult.data);
       }
 
-      // Load all songs for adding
-      const allSongsData = await getSongs(100);
       setAllSongs(allSongsData);
+    } catch (error) {
+      console.error("Error loading data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      // Load new features data
-      const [statsResult, historyResult, playlistsResult, topArtistsResult, topAlbumsResult, privacyResult, recommendationsResult, downloadsResult, yearReviewResult] = await Promise.all([
-        getUserStatistics(session.user.id),
-        getListeningHistory(session.user.id, 50),
-        getUserPlaylists(session.user.id),
-        getUserTopArtists(session.user.id, 10),
-        getUserTopAlbums(session.user.id, 10),
-        getPrivacySettings(session.user.id),
-        getRecommendations(session.user.id, 20),
-        getUserDownloads(session.user.id),
-        getYearInReview(session.user.id),
+  // Load heavy analytics/extra data in background so dashboard opens faster
+  const loadExtraData = async (userId) => {
+    try {
+      const [
+        statsResult,
+        historyResult,
+        playlistsResult,
+        topArtistsResult,
+        topAlbumsResult,
+        privacyResult,
+        recommendationsResult,
+        downloadsResult,
+        yearReviewResult,
+      ] = await Promise.all([
+        getUserStatistics(userId),
+        getListeningHistory(userId, 50),
+        getUserPlaylists(userId),
+        getUserTopArtists(userId, 10),
+        getUserTopAlbums(userId, 10),
+        getPrivacySettings(userId),
+        getRecommendations(userId, 20),
+        getUserDownloads(userId),
+        getYearInReview(userId),
       ]);
 
       if (statsResult.success) setStatistics(statsResult.data);
@@ -169,9 +190,7 @@ export default function UserDashboard() {
       if (downloadsResult.success) setDownloads(downloadsResult.data);
       if (yearReviewResult.success) setYearInReview(yearReviewResult.data);
     } catch (error) {
-      console.error("Error loading data:", error);
-    } finally {
-      setLoading(false);
+      console.error("Error loading extra dashboard data:", error);
     }
   };
 

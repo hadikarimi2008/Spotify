@@ -400,7 +400,7 @@ export default function MobileNavbar() {
                           <div
                             key={album.id}
                             onClick={() => {
-                              router.push(`/album/${album.id}`);
+                              router.push(`/share/album/${album.id}`);
                               setShowSearch(false);
                               setShowSearchResults(false);
                               setSearchQuery("");

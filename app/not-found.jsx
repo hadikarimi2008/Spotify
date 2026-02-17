@@ -32,6 +32,7 @@ export default function NotFound() {
               alt="Spotify"
               fill
               className="opacity-80"
+              sizes="(max-width: 768px) 80px, 96px"
             />
           </div>
         )}

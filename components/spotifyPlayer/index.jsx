@@ -15,12 +15,14 @@ import {
 import { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { addToRecentlyPlayed } from "@/app/actions";
 import { addToFavorites, removeFromFavorites, getFavoriteSongs } from "@/app/dashboard/actions";
 import FullscreenPlayer from "@/components/fullscreenPlayer";
 
 export default function SpotifyPlayer() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [currentSong, setCurrentSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -302,6 +304,18 @@ export default function SpotifyPlayer() {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
+  const setPlaylistAndPlay = useCallback(
+    (songs, startIndex = 0) => {
+      if (!songs || songs.length === 0) return;
+      const index = Math.min(Math.max(startIndex, 0), songs.length - 1);
+      setSongsList(songs);
+      setCurrentIndex(index);
+      setCurrentSong(songs[index]);
+      setIsPlaying(true);
+    },
+    []
+  );
+
   const playSong = useCallback(async (song) => {
     setCurrentSong(song);
     setIsPlaying(true);
@@ -336,13 +350,15 @@ export default function SpotifyPlayer() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.playSong = playSong;
+      window.setPlaylistAndPlay = setPlaylistAndPlay;
     }
     return () => {
       if (typeof window !== "undefined") {
         delete window.playSong;
+        delete window.setPlaylistAndPlay;
       }
     };
-  }, [playSong]);
+  }, [playSong, setPlaylistAndPlay]);
 
   return (
     <>
@@ -396,10 +412,24 @@ export default function SpotifyPlayer() {
               )}
             </div>
               <div className="flex-1 min-w-0">
-                <h4 className="text-[13px] text-white font-medium truncate">
+                <h4
+                  className="text-[13px] text-white font-medium truncate hover:underline cursor-pointer"
+                  onClick={() => {
+                    if (currentSong?.id) {
+                      router.push(`/share/song/${currentSong.id}`);
+                    }
+                  }}
+                >
                   {currentSong?.title || "No song selected"}
               </h4>
-                <p className="text-[11px] text-[#b3b3b3] truncate">
+                <p
+                  className="text-[11px] text-[#b3b3b3] truncate hover:underline cursor-pointer"
+                  onClick={() => {
+                    if (currentSong?.artist?.id) {
+                      router.push(`/artist/${currentSong.artist.id}`);
+                    }
+                  }}
+                >
                   {currentSong?.artist?.name || "Select a song to play"}
               </p>
             </div>
@@ -566,10 +596,24 @@ export default function SpotifyPlayer() {
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="text-[14px] text-white font-semibold hover:underline cursor-pointer truncate">
+              <h4
+                className="text-[14px] text-white font-semibold hover:underline cursor-pointer truncate"
+                onClick={() => {
+                  if (currentSong?.id) {
+                    router.push(`/share/song/${currentSong.id}`);
+                  }
+                }}
+              >
                 {currentSong?.title || "No song selected"}
               </h4>
-              <p className="text-[12px] text-[#b3b3b3] hover:underline hover:text-white cursor-pointer transition-colors truncate">
+              <p
+                className="text-[12px] text-[#b3b3b3] hover:underline hover:text-white cursor-pointer transition-colors truncate"
+                onClick={() => {
+                  if (currentSong?.artist?.id) {
+                    router.push(`/artist/${currentSong.artist.id}`);
+                  }
+                }}
+              >
                 {currentSong?.artist?.name || "Select a song to play"}
               </p>
             </div>

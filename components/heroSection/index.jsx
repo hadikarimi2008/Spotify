@@ -1,12 +1,22 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Play, Heart, Share2 } from "lucide-react";
 import { getSongs, getTopAlbums, getTopArtists } from "@/app/actions";
 import { useSession } from "next-auth/react";
-import { addToFavorites, removeFromFavorites, getFavoriteSongs } from "@/app/dashboard/actions";
+import {
+  addToFavorites,
+  removeFromFavorites,
+  getFavoriteSongs,
+} from "@/app/dashboard/actions";
 import { getAllGenres } from "@/lib/genres";
 
 export default function HeroSection() {
@@ -19,41 +29,42 @@ export default function HeroSection() {
   const genres = useMemo(() => getAllGenres(), []);
   const { data: session } = useSession();
 
-  // Shuffle array function for random order
-  const shuffleArray = useCallback((array) => {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
+  const getRandomItems = useCallback((array, count) => {
+    const shuffled = [...array].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
   }, []);
+
+  const getArtistCount = () =>
+    typeof window !== "undefined" && window.innerWidth < 768 ? 4 : 5;
 
   const loadSongs = useCallback(async () => {
     setLoading(true);
     try {
-      const [songsData, albumsData, artistsData] = await Promise.all([
+      const [songsData, allAlbums, allArtists] = await Promise.all([
         getSongs(20, selectedGenre),
-        getTopAlbums(3),
-        getTopArtists(5)
+        getTopAlbums(),
+        getTopArtists(),
       ]);
+
       setSongs(songsData);
-      // Shuffle albums and artists for random display
-      setAlbums(shuffleArray(albumsData));
-      setArtists(shuffleArray(artistsData));
+
+      const artistCount = getArtistCount();
+      setArtists(getRandomItems(allArtists, artistCount));
+
+      setAlbums(getRandomItems(allAlbums, 3));
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
-  }, [selectedGenre, shuffleArray]);
+  }, [selectedGenre, getRandomItems]);
 
   const loadFavorites = useCallback(async () => {
     if (!session?.user?.id) return;
     try {
       const result = await getFavoriteSongs(session.user.id);
       if (result.success) {
-        const ids = new Set(result.data.map(s => s.id));
+        const ids = new Set(result.data.map((s) => s.id));
         setFavoriteIds(ids);
       }
     } catch (error) {
@@ -61,69 +72,92 @@ export default function HeroSection() {
     }
   }, [session?.user?.id]);
 
+  const hasLoaded = useRef(false);
+
   useEffect(() => {
+    if (hasLoaded.current) return;
+    hasLoaded.current = true;
+
     loadSongs();
+
     if (session?.user?.id) {
       loadFavorites();
     }
-  }, [loadSongs, loadFavorites, session?.user?.id]);
+  }, [session?.user?.id, loadSongs, loadFavorites]);
 
-  const toggleFavorite = useCallback(async (song) => {
-    if (!session?.user?.id) {
-      console.warn("⚠️ Cannot toggle favorite: User not logged in");
-      return;
-    }
+  // Reload songs when genre filter changes (after initial load)
+  useEffect(() => {
+    if (!hasLoaded.current) return;
+    loadSongs();
+  }, [selectedGenre, loadSongs]);
 
-    if (!song || !song.id) {
-      console.error("❌ Cannot toggle favorite: Invalid song data");
-      return;
-    }
-
-    const isFavorite = favoriteIds.has(song.id);
-
-    try {
-      if (isFavorite) {
-        console.log("🗑️ Removing from favorites:", song.id);
-        const result = await removeFromFavorites(session.user.id, song.id);
-        if (result.success) {
-          setFavoriteIds(prev => {
-            const newSet = new Set(prev);
-            newSet.delete(song.id);
-            return newSet;
-          });
-          // Dispatch event for real-time update
-          if (typeof window !== "undefined") {
-            window.dispatchEvent(new CustomEvent("favoriteUpdated", { detail: { songId: song.id, added: false } }));
-          }
-          console.log("✅ Removed from favorites");
-        } else {
-          console.error("❌ Failed to remove from favorites:", result.error);
-        }
-      } else {
-        console.log("➕ Adding to favorites:", song.id);
-        const result = await addToFavorites(session.user.id, song.id);
-        if (result.success) {
-          setFavoriteIds(prev => new Set(prev).add(song.id));
-          // Dispatch event for real-time update
-          if (typeof window !== "undefined") {
-            window.dispatchEvent(new CustomEvent("favoriteUpdated", { detail: { songId: song.id, added: true, song: result.data } }));
-          }
-          console.log("✅ Added to favorites");
-        } else {
-          console.error("❌ Failed to add to favorites:", result.error);
-          alert(result.error || "Failed to add to favorites");
-        }
+  const toggleFavorite = useCallback(
+    async (song) => {
+      if (!session?.user?.id) {
+        console.warn("⚠️ Cannot toggle favorite: User not logged in");
+        return;
       }
-    } catch (error) {
-      console.error("❌ Error toggling favorite:", error);
-      console.error("Error details:", {
-        message: error.message,
-        songId: song.id,
-        userId: session.user.id,
-      });
-      alert("An error occurred. Please check the console for details.");
-    }
-  }, [session?.user?.id, favoriteIds]);
+
+      if (!song || !song.id) {
+        console.error("❌ Cannot toggle favorite: Invalid song data");
+        return;
+      }
+
+      const isFavorite = favoriteIds.has(song.id);
+
+      try {
+        if (isFavorite) {
+          console.log("🗑️ Removing from favorites:", song.id);
+          const result = await removeFromFavorites(session.user.id, song.id);
+          if (result.success) {
+            setFavoriteIds((prev) => {
+              const newSet = new Set(prev);
+              newSet.delete(song.id);
+              return newSet;
+            });
+            // Dispatch event for real-time update
+            if (typeof window !== "undefined") {
+              window.dispatchEvent(
+                new CustomEvent("favoriteUpdated", {
+                  detail: { songId: song.id, added: false },
+                }),
+              );
+            }
+            console.log("✅ Removed from favorites");
+          } else {
+            console.error("❌ Failed to remove from favorites:", result.error);
+          }
+        } else {
+          console.log("➕ Adding to favorites:", song.id);
+          const result = await addToFavorites(session.user.id, song.id);
+          if (result.success) {
+            setFavoriteIds((prev) => new Set(prev).add(song.id));
+            // Dispatch event for real-time update
+            if (typeof window !== "undefined") {
+              window.dispatchEvent(
+                new CustomEvent("favoriteUpdated", {
+                  detail: { songId: song.id, added: true, song: result.data },
+                }),
+              );
+            }
+            console.log("✅ Added to favorites");
+          } else {
+            console.error("❌ Failed to add to favorites:", result.error);
+            alert(result.error || "Failed to add to favorites");
+          }
+        }
+      } catch (error) {
+        console.error("❌ Error toggling favorite:", error);
+        console.error("Error details:", {
+          message: error.message,
+          songId: song.id,
+          userId: session.user.id,
+        });
+        alert("An error occurred. Please check the console for details.");
+      }
+    },
+    [session?.user?.id, favoriteIds],
+  );
 
   const formatDuration = useCallback((seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -164,9 +198,13 @@ export default function HeroSection() {
     try {
       const { getSongs } = await import("@/app/actions");
       const allSongs = await getSongs(100);
-      const albumSongs = allSongs.filter(song => song.albumId === album.id);
-      
-      if (albumSongs.length > 0 && typeof window !== "undefined" && window.playSong) {
+      const albumSongs = allSongs.filter((song) => song.albumId === album.id);
+
+      if (
+        albumSongs.length > 0 &&
+        typeof window !== "undefined" &&
+        window.playSong
+      ) {
         window.playSong(albumSongs[0]);
       }
     } catch (error) {
@@ -179,9 +217,15 @@ export default function HeroSection() {
     try {
       const { getSongs } = await import("@/app/actions");
       const allSongs = await getSongs(100);
-      const artistSongs = allSongs.filter(song => song.artistId === artist.id);
-      
-      if (artistSongs.length > 0 && typeof window !== "undefined" && window.playSong) {
+      const artistSongs = allSongs.filter(
+        (song) => song.artistId === artist.id,
+      );
+
+      if (
+        artistSongs.length > 0 &&
+        typeof window !== "undefined" &&
+        window.playSong
+      ) {
         window.playSong(artistSongs[0]);
       }
     } catch (error) {
@@ -203,7 +247,9 @@ export default function HeroSection() {
         {/* Top Artists Section */}
         {artists.length > 0 && (
           <div className="mb-6 md:mb-8">
-            <h2 className="text-white text-xl md:text-2xl font-bold mb-4 md:mb-6">Popular Artists</h2>
+            <h2 className="text-white text-xl md:text-2xl font-bold mb-4 md:mb-6">
+              Popular Artists
+            </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
               {artists.map((artist) => (
                 <div
@@ -226,7 +272,11 @@ export default function HeroSection() {
                     )}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                       <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#1DB954] hover:bg-[#1ed760] rounded-full p-2 md:p-3 shadow-lg">
-                        <Play size={20} className="md:w-6 md:h-6" fill="black" />
+                        <Play
+                          size={20}
+                          className="md:w-6 md:h-6"
+                          fill="black"
+                        />
                       </button>
                     </div>
                   </div>
@@ -246,7 +296,9 @@ export default function HeroSection() {
         {/* New Albums Section */}
         {albums.length > 0 && (
           <div className="mb-6 md:mb-8">
-            <h2 className="text-white text-xl md:text-2xl font-bold mb-4 md:mb-6">New Albums</h2>
+            <h2 className="text-white text-xl md:text-2xl font-bold mb-4 md:mb-6">
+              New Albums
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {albums.map((album) => (
                 <div
@@ -286,9 +338,11 @@ export default function HeroSection() {
         )}
 
         <div className="flex items-center justify-between mb-4 md:mb-6">
-          <h2 className="text-white text-xl md:text-2xl font-bold">Popular Songs</h2>
+          <h2 className="text-white text-xl md:text-2xl font-bold">
+            Popular Songs
+          </h2>
         </div>
-        
+
         <div className="mb-4 md:mb-6 flex flex-wrap gap-2 overflow-x-auto pb-2">
           <button
             onClick={() => setSelectedGenre(null)}
@@ -316,9 +370,7 @@ export default function HeroSection() {
         </div>
 
         {songs.length === 0 ? (
-          <div className="text-[#b3b3b3] text-center py-12">
-            No songs found
-          </div>
+          <div className="text-[#b3b3b3] text-center py-12">No songs found</div>
         ) : (
           <div className="space-y-2">
             {songs.map((song, index) => {
@@ -381,9 +433,17 @@ export default function HeroSection() {
                           ? "text-[#1DB954] hover:text-[#1ed760]"
                           : "text-[#b3b3b3] hover:text-white"
                       }`}
-                      title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+                      title={
+                        isFavorite
+                          ? "Remove from favorites"
+                          : "Add to favorites"
+                      }
                     >
-                      <Heart size={16} className="md:w-[18px] md:h-[18px]" fill={isFavorite ? "currentColor" : "none"} />
+                      <Heart
+                        size={16}
+                        className="md:w-[18px] md:h-[18px]"
+                        fill={isFavorite ? "currentColor" : "none"}
+                      />
                     </button>
                     <button
                       onClick={(e) => handleShare(e, song)}

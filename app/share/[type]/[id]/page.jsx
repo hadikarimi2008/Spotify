@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import prisma from "@/lib/prisma";
 import logo from "@/public/logo/spotify.png";
+import Link from "next/link";
 
 async function getShareData(type, id) {
   try {
@@ -168,7 +169,15 @@ export default async function SharePage({ params }) {
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const playUrl = `${baseUrl}${type === "song" ? `?play=${id}` : type === "playlist" ? `/playlist/${id}` : `/${type}/${id}`}`;
+  const playUrl = `${baseUrl}${
+    type === "song"
+      ? `?play=${id}`
+      : type === "playlist"
+      ? `/share/playlist/${id}`
+      : type === "album"
+      ? `/share/album/${id}`
+      : `/${type}/${id}`
+  }`;
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
@@ -221,12 +230,20 @@ export default async function SharePage({ params }) {
             </p>
           </div>
 
-          <a
+         <div className="flex items-center justify-center gap-4">
+         <Link
             href={playUrl}
-            className="inline-block bg-white text-black font-bold px-8 py-4 rounded-full hover:scale-105 transition-transform text-lg"
+            className="px-1 inline-block bg-white text-black font-bold px-8 py-4 rounded-full hover:scale-105 transition-transform text-lg"
           >
             Open in Spotify
-          </a>
+          </Link>
+          <Link
+            href="/"
+            className="px-1 inline-block bg-white text-black font-bold px-8 py-4 rounded-full hover:scale-105 transition-transform text-lg"
+          >
+            Back to Spotify
+          </Link>
+         </div>
 
           <div className="mt-8 pt-6 border-t border-white/20">
             <p className="text-white/60 text-sm">

@@ -262,7 +262,7 @@ export default function Header() {
                       <div
                         key={album.id}
                         onClick={() => {
-                          router.push(`/album/${album.id}`);
+                          router.push(`/share/album/${album.id}`);
                           setShowSearchResults(false);
                           setSearchQuery("");
                         }}

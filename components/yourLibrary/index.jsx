@@ -4,9 +4,7 @@ import { Music, Heart } from "lucide-react";
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { 
-  getFavoriteSongs
-} from "@/app/dashboard/actions";
+import { getFavoriteSongs } from "@/app/dashboard/actions";
 import { getRecentlyPlayed } from "@/app/actions";
 
 export default function YourLibrary() {
@@ -17,7 +15,7 @@ export default function YourLibrary() {
 
   const fetchData = useCallback(async () => {
     if (!session?.user?.id) return;
-    
+
     setLoading(true);
     try {
       const [favoritesResult, recentlyPlayedData] = await Promise.all([
@@ -95,46 +93,6 @@ export default function YourLibrary() {
           </div>
         ) : (
           <>
-            {recentlyPlayed.length > 0 && (
-              <div className="mb-6">
-                <h3 className="text-[#b3b3b3] text-xs font-bold uppercase px-2 mb-2">
-                  Recently Played
-                </h3>
-                <div className="space-y-1">
-                  {recentlyPlayed.map((song) => (
-                    <div
-                      key={song.id}
-                      className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-[#1a1a1a] transition-colors cursor-pointer group"
-                      onClick={() => handlePlaySong(song)}
-                    >
-                      <div className="relative w-12 h-12 rounded-md overflow-hidden shrink-0 bg-[#282828] flex items-center justify-center">
-                        {song.imageUrl ? (
-                          <Image
-                            src={song.imageUrl}
-                            alt={song.title}
-                            fill
-                            className="object-cover"
-                            sizes="48px"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <Music size={24} className="text-[#b3b3b3]" />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-white text-sm font-medium truncate">
-                          {song.title}
-                        </h4>
-                        <p className="text-[#b3b3b3] text-xs truncate">
-                          {song.artist?.name || "Unknown Artist"}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {favoriteSongs.length > 0 && (
               <div className="mb-6">
                 <h3 className="text-[#b3b3b3] text-xs font-bold uppercase px-2 mb-2">
@@ -170,7 +128,10 @@ export default function YourLibrary() {
                         </p>
                       </div>
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Heart size={16} className="text-[#1DB954] fill-[#1DB954]" />
+                        <Heart
+                          size={16}
+                          className="text-[#1DB954] fill-[#1DB954]"
+                        />
                       </div>
                     </div>
                   ))}
@@ -184,6 +145,46 @@ export default function YourLibrary() {
               </div>
             )}
           </>
+        )}
+
+        {recentlyPlayed.length > 0 && (
+          <div className="mb-6">
+            <h3 className="text-[#b3b3b3] text-xs font-bold uppercase px-2 mb-2">
+              Recently Played
+            </h3>
+            <div className="space-y-1">
+              {recentlyPlayed.slice(0, 7).map((song) => (
+                <div
+                  key={song.id}
+                  className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-[#1a1a1a] transition-colors cursor-pointer group"
+                  onClick={() => handlePlaySong(song)}
+                >
+                  <div className="relative w-12 h-12 rounded-md overflow-hidden shrink-0 bg-[#282828] flex items-center justify-center">
+                    {song.imageUrl ? (
+                      <Image
+                        src={song.imageUrl}
+                        alt={song.title}
+                        fill
+                        className="object-cover"
+                        sizes="48px"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <Music size={24} className="text-[#b3b3b3]" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-white text-sm font-medium truncate">
+                      {song.title}
+                    </h4>
+                    <p className="text-[#b3b3b3] text-xs truncate">
+                      {song.artist?.name || "Unknown Artist"}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
     </section>

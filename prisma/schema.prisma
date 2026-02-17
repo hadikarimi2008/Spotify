@@ -183,3 +183,5 @@ model UserDownload {
   @@unique([userId, songId], name: "userId_songId_download")
   @@index([userId])
 }
+
+

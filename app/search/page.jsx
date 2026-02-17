@@ -126,6 +126,8 @@ function SearchContent() {
                               alt={song.title}
                               fill
                               className="object-cover"
+                              sizes="56px"
+                              loading="lazy"
                             />
                           ) : (
                             <div className="w-full h-full bg-gradient-to-br from-purple-700 to-blue-900" />
@@ -168,6 +170,8 @@ function SearchContent() {
                               alt={artist.name}
                               fill
                               className="object-cover"
+                              sizes="(max-width: 640px) 40vw, (max-width: 1024px) 25vw, 16vw"
+                              loading="lazy"
                             />
                           ) : (
                             <div className="w-full h-full bg-gradient-to-br from-purple-700 to-blue-900 flex items-center justify-center">
@@ -204,6 +208,8 @@ function SearchContent() {
                               alt={album.title}
                               fill
                               className="object-cover"
+                              sizes="(max-width: 640px) 40vw, (max-width: 1024px) 25vw, 16vw"
+                              loading="lazy"
                             />
                           ) : (
                             <div className="w-full h-full bg-gradient-to-br from-purple-700 to-blue-900 flex items-center justify-center">
