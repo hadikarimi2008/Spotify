@@ -1,4 +1,4 @@
-<img width="1536" height="1024" alt="Copilot_20260222_015511" src="https://github.com/user-attachments/assets/761d12a9-a2b2-4066-89c2-a62a2f68e186" />## ⚠️ License & Copyright
+## ⚠️ License & Copyright
 
 **Copyright (c) 2026 Hadi. All rights reserved.**
 
