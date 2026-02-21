@@ -30,9 +30,11 @@ const DeveloperModal = () => {
   return (
     <div className="">
       <button
+        type="button"
         onClick={() => setIsOpen(true)}
         className="p-3 mx-3 bg-[#1DB954] text-black rounded-full shadow-lg hover:scale-110 transition-transform active:scale-95 group"
         title="About Developer"
+        aria-label="About Developer"
       >
         <Code2 size={10} />
       </button>
@@ -49,10 +51,7 @@ const DeveloperModal = () => {
           <div
             className={`relative w-full max-w-[320px] bg-[#181818] rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 ${isOpen ? "scale-100 opacity-100" : "scale-90 opacity-0"}`}
           >
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-3 right-3 text-white/50 hover:text-white z-20"
-            >
+            <button type="button" onClick={() => setIsOpen(false)} className="absolute top-3 right-3 text-white/50 hover:text-white z-20" aria-label="Close">
               <X size={20} />
             </button>
 

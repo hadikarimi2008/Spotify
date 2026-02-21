@@ -103,42 +103,30 @@ export default function MobileNavbar() {
             href="/"
             className="flex flex-col items-center justify-center gap-1 flex-1 py-2 active:scale-95 transition-transform"
           >
-            <Home size={22} className="text-[#b3b3b3]" />
-            <span className="text-[10px] text-[#b3b3b3]">Home</span>
+            <Home size={22} className="text-[#c4c4c4]" />
+            <span className="text-[10px] text-[#c4c4c4]">Home</span>
           </Link>
 
           {/* Library */}
-          <button
-            onClick={() => setShowLibrary(true)}
-            className="flex flex-col items-center justify-center gap-1 flex-1 py-2 active:scale-95 transition-transform"
-          >
-            <Music size={22} className="text-[#b3b3b3]" />
-            <span className="text-[10px] text-[#b3b3b3]">Library</span>
+          <button type="button" aria-label="Open Library" onClick={() => setShowLibrary(true)} className="flex flex-col items-center justify-center gap-1 flex-1 py-2 active:scale-95 transition-transform">
+            <Music size={22} className="text-[#c4c4c4]" />
+            <span className="text-[10px] text-[#c4c4c4]">Library</span>
           </button>
 
           {/* Search */}
-          <button
-            onClick={() => setShowSearch(true)}
-            className="flex flex-col items-center justify-center gap-1 flex-1 py-2 active:scale-95 transition-transform"
-          >
-            <Search size={22} className="text-[#b3b3b3]" />
-            <span className="text-[10px] text-[#b3b3b3]">Search</span>
+          <button type="button" aria-label="Open Search" onClick={() => setShowSearch(true)} className="flex flex-col items-center justify-center gap-1 flex-1 py-2 active:scale-95 transition-transform">
+            <Search size={22} className="text-[#c4c4c4]" />
+            <span className="text-[10px] text-[#c4c4c4]">Search</span>
           </button>
 
           {/* Notifications */}
-          <button
-            onClick={() => setShowNotifications(!showNotifications)}
-            className="flex flex-col items-center justify-center gap-1 flex-1 py-2 active:scale-95 transition-transform relative"
-          >
-            <Bell size={22} className="text-[#b3b3b3]" />
-            <span className="text-[10px] text-[#b3b3b3]">Notifications</span>
+          <button type="button" aria-label="Notifications" onClick={() => setShowNotifications(!showNotifications)} className="flex flex-col items-center justify-center gap-1 flex-1 py-2 active:scale-95 transition-transform relative">
+            <Bell size={22} className="text-[#c4c4c4]" />
+            <span className="text-[10px] text-[#c4c4c4]">Notifications</span>
           </button>
 
           {/* Profile */}
-          <button
-            onClick={() => setShowProfile(!showProfile)}
-            className="flex flex-col items-center justify-center gap-1 flex-1 py-2 active:scale-95 transition-transform"
-          >
+          <button type="button" aria-label="Profile" onClick={() => setShowProfile(!showProfile)} className="flex flex-col items-center justify-center gap-1 flex-1 py-2 active:scale-95 transition-transform">
             {status === "loading" ? (
               <div className="w-6 h-6 rounded-full bg-[#242424] animate-pulse" />
             ) : session?.user ? (
@@ -156,9 +144,9 @@ export default function MobileNavbar() {
                 </div>
               )
             ) : (
-              <User size={22} className="text-[#b3b3b3]" />
+              <User size={22} className="text-[#c4c4c4]" />
             )}
-            <span className="text-[10px] text-[#b3b3b3]">Profile</span>
+            <span className="text-[10px] text-[#c4c4c4]">Profile</span>
           </button>
         </div>
       </nav>
@@ -174,7 +162,7 @@ export default function MobileNavbar() {
             <h2 className="text-white text-xl font-bold">Your Library</h2>
             <button
               onClick={() => setShowLibrary(false)}
-              className="text-[#b3b3b3] hover:text-white transition-colors p-2"
+              className="text-[#c4c4c4] hover:text-white transition-colors p-2"
               aria-label="Close Library"
             >
               <X size={24} />
@@ -198,15 +186,12 @@ export default function MobileNavbar() {
           >
             <div className="p-4 border-b border-[#2a2a2a] flex items-center justify-between sticky top-0 bg-[#121212]">
               <h3 className="text-white font-bold text-lg">Notifications</h3>
-              <button
-                onClick={() => setShowNotifications(false)}
-                className="text-[#b3b3b3] hover:text-white transition-colors p-2"
-              >
+              <button type="button" onClick={() => setShowNotifications(false)} className="text-[#c4c4c4] hover:text-white transition-colors p-2" aria-label="Close notifications">
                 <X size={20} />
               </button>
             </div>
             <div className="p-8 text-center">
-              <p className="text-[#b3b3b3] text-sm">You have no messages</p>
+              <p className="text-[#c4c4c4] text-sm">You have no messages</p>
             </div>
           </div>
         </div>
@@ -224,10 +209,7 @@ export default function MobileNavbar() {
           >
             <div className="p-4 border-b border-[#2a2a2a] flex items-center justify-between sticky top-0 bg-[#121212]">
               <h3 className="text-white font-bold text-lg">Profile</h3>
-              <button
-                onClick={() => setShowProfile(false)}
-                className="text-[#b3b3b3] hover:text-white transition-colors p-2"
-              >
+              <button type="button" onClick={() => setShowProfile(false)} className="text-[#c4c4c4] hover:text-white transition-colors p-2" aria-label="Close profile">
                 <X size={20} />
               </button>
             </div>
@@ -257,7 +239,7 @@ export default function MobileNavbar() {
                       <h4 className="text-white font-bold text-lg">
                         {session.user.name || session.user.email}
                       </h4>
-                      <p className="text-[#b3b3b3] text-sm flex items-center">
+                      <p className="text-[#c4c4c4] text-sm flex items-center">
                         {session.user.email}
                          <DeveloperModal/>
                       </p>
@@ -268,7 +250,7 @@ export default function MobileNavbar() {
                     onClick={() => setShowProfile(false)}
                     className="flex items-center gap-3 p-3 bg-[#1a1a1a] hover:bg-[#242424] rounded-lg transition-colors"
                   >
-                    <User size={20} className="text-[#b3b3b3]" />
+                    <User size={20} className="text-[#c4c4c4]" />
                     <span className="text-white font-medium">View Profile</span>
                   </Link>
                   <div></div>
@@ -297,7 +279,7 @@ export default function MobileNavbar() {
                 </>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-[#b3b3b3] mb-4">You are not logged in</p>
+                  <p className="text-[#c4c4c4] mb-4">You are not logged in</p>
                   <Link
                     href="/login"
                     onClick={() => setShowProfile(false)}
@@ -323,29 +305,22 @@ export default function MobileNavbar() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-4 border-b border-[#2a2a2a] flex items-center gap-3 sticky top-0 bg-black z-10">
-              <button
-                onClick={() => setShowSearch(false)}
-                className="text-[#b3b3b3] hover:text-white transition-colors p-2"
-              >
+              <button type="button" onClick={() => setShowSearch(false)} className="text-[#c4c4c4] hover:text-white transition-colors p-2" aria-label="Close search">
                 <X size={24} />
               </button>
-              <form
-                onSubmit={handleSearchSubmit}
-                className="flex-1 relative"
-                ref={searchRef}
-              >
-                <Search
-                  size={20}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b3b3b3]"
-                />
+              <form onSubmit={handleSearchSubmit} className="flex-1 relative" ref={searchRef} role="search">
+                <label htmlFor="mobile-search" className="sr-only">Search for songs and artists</label>
+                <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#c4c4c4]" aria-hidden="true" />
                 <input
-                  type="text"
+                  id="mobile-search"
+                  type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() =>
                     searchQuery.trim() && setShowSearchResults(true)
                   }
-                  className="w-full h-12 bg-[#242424] text-white rounded-full pl-11 pr-4 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all placeholder-[#757575]"
+                  aria-label="Search for songs and artists"
+                  className="w-full h-12 bg-[#242424] text-white rounded-full pl-11 pr-4 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all placeholder-[#9e9e9e]"
                   placeholder="What do you want to play?"
                   autoFocus
                 />
@@ -394,7 +369,7 @@ export default function MobileNavbar() {
                               <p className="text-white text-sm font-medium truncate">
                                 {song.title}
                               </p>
-                              <p className="text-[#b3b3b3] text-xs truncate">
+                              <p className="text-[#c4c4c4] text-xs truncate">
                                 {song.artist?.name}
                               </p>
                             </div>
@@ -479,7 +454,7 @@ export default function MobileNavbar() {
                               <p className="text-white text-sm font-medium truncate">
                                 {album.title}
                               </p>
-                              <p className="text-[#b3b3b3] text-xs truncate">
+                              <p className="text-[#c4c4c4] text-xs truncate">
                                 {album.artist?.name}
                               </p>
                             </div>
@@ -501,7 +476,7 @@ export default function MobileNavbar() {
               )}
               {!showSearchResults && searchQuery.trim().length === 0 && (
                 <div className="flex items-center justify-center h-full">
-                  <p className="text-[#b3b3b3] text-sm">
+                  <p className="text-[#c4c4c4] text-sm">
                     Start typing to search...
                   </p>
                 </div>

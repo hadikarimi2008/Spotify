@@ -86,7 +86,7 @@ export default function YourLibrary() {
 
   return (
     <section className="flex flex-col w-full md:w-[300px] lg:w-[420px] bg-[#121212] h-[80svh] rounded-[8px] overflow-hidden">
-      <div className="h-[64px] flex items-center justify-between font-bold text-[#b3b3b3] px-4 shrink-0">
+      <div className="h-[64px] flex items-center justify-between font-bold text-[#c4c4c4] px-4 shrink-0">
         <div className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
           <h2 className="text-[16px]">Your Library</h2>
         </div>
@@ -94,16 +94,16 @@ export default function YourLibrary() {
 
       <div className="flex-1 overflow-y-auto px-2 spotify-scrollbar">
         {loading ? (
-          <div className="text-[#b3b3b3] text-center py-8">Loading...</div>
+          <div className="text-[#c4c4c4] text-center py-8">Loading...</div>
         ) : !session?.user ? (
-          <div className="text-[#b3b3b3] text-center py-8 text-sm px-4">
+          <div className="text-[#c4c4c4] text-center py-8 text-sm px-4">
             Please login to view your library
           </div>
         ) : (
           <>
             {favoriteSongs.length > 0 && (
               <div className="mb-6">
-                <h3 className="text-[#b3b3b3] text-xs font-bold uppercase px-2 mb-2">
+                <h3 className="text-[#c4c4c4] text-xs font-bold uppercase px-2 mb-2">
                   Favorite Songs
                 </h3>
                 <div className="space-y-1">
@@ -124,14 +124,14 @@ export default function YourLibrary() {
                             loading="lazy"
                           />
                         ) : (
-                          <Music size={24} className="text-[#b3b3b3]" />
+                          <Music size={24} className="text-[#c4c4c4]" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-white text-sm font-medium truncate">
                           {song.title}
                         </h4>
-                        <p className="text-[#b3b3b3] text-xs truncate">
+                        <p className="text-[#c4c4c4] text-xs truncate">
                           {song.artist?.name || "Unknown Artist"}
                         </p>
                       </div>
@@ -148,7 +148,7 @@ export default function YourLibrary() {
             )}
 
             {favoriteSongs.length === 0 && recentlyPlayed.length === 0 && (
-              <div className="text-[#b3b3b3] text-center py-8 text-sm px-4">
+              <div className="text-[#c4c4c4] text-center py-8 text-sm px-4">
                 Your library is empty. Add songs to favorites.
               </div>
             )}
@@ -157,7 +157,7 @@ export default function YourLibrary() {
 
         {recentlyPlayed.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-[#b3b3b3] text-xs font-bold uppercase px-2 mb-2">
+            <h3 className="text-[#c4c4c4] text-xs font-bold uppercase px-2 mb-2">
               Recently Played
             </h3>
             <div className="space-y-1">
@@ -178,14 +178,14 @@ export default function YourLibrary() {
                         loading="lazy"
                       />
                     ) : (
-                      <Music size={24} className="text-[#b3b3b3]" />
+                      <Music size={24} className="text-[#c4c4c4]" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="text-white text-sm font-medium truncate">
                       {song.title}
                     </h4>
-                    <p className="text-[#b3b3b3] text-xs truncate">
+                    <p className="text-[#c4c4c4] text-xs truncate">
                       {song.artist?.name || "Unknown Artist"}
                     </p>
                   </div>

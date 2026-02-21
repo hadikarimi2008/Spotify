@@ -51,7 +51,7 @@ export default function NotFound() {
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
             Page not found
           </h2>
-          <p className="text-[#b3b3b3] text-sm md:text-base mb-6">
+          <p className="text-[#c4c4c4] text-sm md:text-base mb-6">
             The page you're looking for doesn't exist or has been moved.
           </p>
         </div>

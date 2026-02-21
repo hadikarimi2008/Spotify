@@ -110,8 +110,9 @@ export default function SignupForm() {
               What is your email address?
             </h1>
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-bold">Email address</label>
+              <label htmlFor="signup-email" className="text-sm font-bold">Email address</label>
               <input
+                id="signup-email"
                 required
                 type="email"
                 name="email"
@@ -121,7 +122,7 @@ export default function SignupForm() {
                 className="w-full p-3 bg-[#121212] border border-[#727272] rounded-[4px] focus:border-[#1DB954] focus:border-2 outline-none placeholder:text-[#a7a7a7]"
               />
             </div>
-            <button className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
+            <button type="submit" className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
               Next
             </button>
           </form>
@@ -133,8 +134,9 @@ export default function SignupForm() {
               Create a password
             </h1>
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-bold">Password</label>
+              <label htmlFor="signup-password" className="text-sm font-bold">Password</label>
               <input
+                id="signup-password"
                 required
                 type="password"
                 name="password"
@@ -147,7 +149,7 @@ export default function SignupForm() {
                 Your password must be at least 8 characters long.
               </p>
             </div>
-            <button className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
+            <button type="submit" className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
               Next
             </button>
           </form>
@@ -159,11 +161,12 @@ export default function SignupForm() {
               Tell us about yourself
             </h1>
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-bold">Name</label>
+              <label htmlFor="signup-name" className="text-sm font-bold">Name</label>
               <p className="text-xs text-[#a7a7a7]">
                 This name will appear on your profile.
               </p>
               <input
+                id="signup-name"
                 required
                 type="text"
                 name="name"
@@ -172,7 +175,7 @@ export default function SignupForm() {
                 className="w-full p-3 bg-[#121212] border border-[#727272] rounded-[4px] focus:border-[#1DB954] focus:border-2 outline-none"
               />
             </div>
-            <button className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
+            <button type="submit" className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
               Next
             </button>
           </form>
@@ -184,18 +187,22 @@ export default function SignupForm() {
               What's your date of birth?
             </h1>
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-bold">Date of birth</label>
-              <div className="flex gap-3">
+              <span id="signup-dob-label" className="text-sm font-bold">Date of birth</span>
+              <div className="flex gap-3" role="group" aria-labelledby="signup-dob-label">
                 <input
+                  id="signup-year"
                   required
                   placeholder="yyyy"
                   name="year"
+                  aria-label="Year"
                   className="w-1/3 p-3 bg-[#121212] border border-[#727272] rounded-[4px] outline-none"
                   onChange={handleChange}
                 />
                 <select
+                  id="signup-month"
                   name="month"
                   required
+                  aria-label="Month"
                   className="w-1/3 p-3 bg-[#121212] border border-[#727272] rounded-[4px] outline-none text-[#a7a7a7] focus:border-[#1DB954]"
                   onChange={handleChange}
                 >
@@ -216,15 +223,17 @@ export default function SignupForm() {
                   <option value="12">December</option>
                 </select>
                 <input
+                  id="signup-day"
                   required
                   placeholder="dd"
                   name="day"
+                  aria-label="Day"
                   className="w-1/3 p-3 bg-[#121212] border border-[#727272] rounded-[4px] outline-none"
                   onChange={handleChange}
                 />
               </div>
             </div>
-            <button className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
+            <button type="submit" className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
               Next
             </button>
           </form>

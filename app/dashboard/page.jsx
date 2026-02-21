@@ -504,7 +504,7 @@ export default function UserDashboard() {
       <div className="max-w-7xl mx-auto p-4 md:p-6">
         <div className="mb-6 md:mb-8">
           <h1 className="text-2xl md:text-4xl font-bold mb-2">Your Dashboard</h1>
-          <p className="text-[#b3b3b3] text-sm md:text-base">Manage your profile and music library</p>
+          <p className="text-[#c4c4c4] text-sm md:text-base">Manage your profile and music library</p>
         </div>
 
         <div className="flex items-center gap-2 mb-4 md:mb-6 border-b border-[#2a2a2a] overflow-x-auto">
@@ -513,7 +513,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "profile"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <User size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -524,7 +524,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "favorites"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <Heart size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -535,7 +535,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "my-songs"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <Music size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -546,7 +546,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "statistics"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <BarChart3 size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -557,7 +557,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "history"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <History size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -568,7 +568,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "playlists"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <ListMusic size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -579,7 +579,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "top-artists"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <TrendingUp size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -590,7 +590,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "privacy"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <Lock size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -601,7 +601,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "recommendations"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <Lightbulb size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -612,7 +612,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "downloads"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <Download size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -623,7 +623,7 @@ export default function UserDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "year-review"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <Calendar size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -664,9 +664,10 @@ export default function UserDashboard() {
                         <User size={60} color="white" />
                       </div>
                     )}
-                    <label className="absolute bottom-0 right-0 bg-[#1DB954] p-2 rounded-full cursor-pointer hover:bg-[#1ed760] transition-colors">
+                    <label htmlFor="profile-image-upload" className="absolute bottom-0 right-0 bg-[#1DB954] p-2 rounded-full cursor-pointer hover:bg-[#1ed760] transition-colors" aria-label="Upload profile picture">
                       <Upload size={20} color="white" />
                       <input
+                        id="profile-image-upload"
                         type="file"
                         accept="image/*"
                         className="hidden"
@@ -675,20 +676,22 @@ export default function UserDashboard() {
                           if (file) handleImageUpload(file);
                         }}
                         disabled={uploadingImage}
+                        aria-label="Upload profile picture"
                       />
                     </label>
                   </div>
                   <div className="flex-1">
-                    <p className="text-[#b3b3b3] text-sm mb-2">Profile Picture</p>
+                    <p className="text-[#c4c4c4] text-sm mb-2">Profile Picture</p>
                     {uploadingImage && (
-                      <p className="text-[#b3b3b3] text-xs">Uploading...</p>
+                      <p className="text-[#c4c4c4] text-xs">Uploading...</p>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-white text-sm font-medium mb-2">Name</label>
+                  <label htmlFor="profile-name" className="block text-white text-sm font-medium mb-2">Name</label>
                   <input
+                    id="profile-name"
                     type="text"
                     value={profileData.name}
                     onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
@@ -697,14 +700,15 @@ export default function UserDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-white text-sm font-medium mb-2">Email</label>
+                  <label htmlFor="profile-email" className="block text-white text-sm font-medium mb-2">Email</label>
                   <input
+                    id="profile-email"
                     type="email"
                     value={profileData.email}
                     disabled
                     className="w-full bg-[#242424] text-white rounded-md px-4 py-2 outline-none border border-transparent opacity-50 cursor-not-allowed"
                   />
-                  <p className="text-[#b3b3b3] text-xs mt-1">Email cannot be changed</p>
+                  <p className="text-[#c4c4c4] text-xs mt-1">Email cannot be changed</p>
                 </div>
 
                 <button
@@ -722,8 +726,9 @@ export default function UserDashboard() {
               
               <form onSubmit={handlePasswordChange} className="space-y-4">
                 <div>
-                  <label className="block text-white text-sm font-medium mb-2">Current Password</label>
+                  <label htmlFor="current-password" className="block text-white text-sm font-medium mb-2">Current Password</label>
                   <input
+                    id="current-password"
                     type="password"
                     value={passwordData.currentPassword}
                     onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
@@ -733,8 +738,9 @@ export default function UserDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-white text-sm font-medium mb-2">New Password</label>
+                  <label htmlFor="new-password" className="block text-white text-sm font-medium mb-2">New Password</label>
                   <input
+                    id="new-password"
                     type="password"
                     value={passwordData.newPassword}
                     onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
@@ -745,8 +751,9 @@ export default function UserDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-white text-sm font-medium mb-2">Confirm New Password</label>
+                  <label htmlFor="confirm-password" className="block text-white text-sm font-medium mb-2">Confirm New Password</label>
                   <input
+                    id="confirm-password"
                     type="password"
                     value={passwordData.confirmPassword}
                     onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
@@ -768,7 +775,7 @@ export default function UserDashboard() {
 
             <div className="bg-[#121212] rounded-lg p-6 border border-red-500/30">
               <h2 className="text-2xl font-bold mb-4 text-red-400">Danger Zone</h2>
-              <p className="text-[#b3b3b3] text-sm mb-4">
+              <p className="text-[#c4c4c4] text-sm mb-4">
                 Once you delete your account, there is no going back. Please be certain.
               </p>
               <button
@@ -789,8 +796,8 @@ export default function UserDashboard() {
 
             {favoriteSongs.length === 0 ? (
               <div className="text-center py-12 bg-[#121212] rounded-lg">
-                <Heart size={48} className="mx-auto mb-4 text-[#b3b3b3]" />
-                <p className="text-[#b3b3b3]">No favorite songs yet</p>
+                <Heart size={48} className="mx-auto mb-4 text-[#c4c4c4]" />
+                <p className="text-[#c4c4c4]">No favorite songs yet</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -799,7 +806,7 @@ export default function UserDashboard() {
                     key={song.id}
                     className="flex items-center gap-4 p-3 bg-[#1a1a1a] rounded-md hover:bg-[#242424] transition-colors"
                   >
-                    <div className="w-10 text-[#b3b3b3] text-sm font-medium">{index + 1}</div>
+                    <div className="w-10 text-[#c4c4c4] text-sm font-medium">{index + 1}</div>
                     <div className="relative w-14 h-14 rounded-md overflow-hidden bg-gradient-to-br from-purple-700 to-blue-900 shrink-0">
                       {song.imageUrl && (
                         <img src={song.imageUrl} alt={song.title} className="w-full h-full object-cover" />
@@ -807,11 +814,11 @@ export default function UserDashboard() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-white font-medium truncate">{song.title}</h4>
-                      <p className="text-[#b3b3b3] text-sm truncate">
+                      <p className="text-[#c4c4c4] text-sm truncate">
                         {song.artist?.name || "Unknown"} {song.album && `• ${song.album.title}`}
                       </p>
                     </div>
-                    <div className="text-[#b3b3b3] text-sm">{formatDuration(song.duration)}</div>
+                    <div className="text-[#c4c4c4] text-sm">{formatDuration(song.duration)}</div>
                     <button
                       onClick={() => handleRemoveFavorite(song.id)}
                       className="p-2 text-red-400 hover:text-red-300 transition-colors"
@@ -840,8 +847,8 @@ export default function UserDashboard() {
 
             {userSongs.length === 0 ? (
               <div className="text-center py-12 bg-[#121212] rounded-lg">
-                <Music size={48} className="mx-auto mb-4 text-[#b3b3b3]" />
-                <p className="text-[#b3b3b3]">No songs in your library yet</p>
+                <Music size={48} className="mx-auto mb-4 text-[#c4c4c4]" />
+                <p className="text-[#c4c4c4]">No songs in your library yet</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -850,7 +857,7 @@ export default function UserDashboard() {
                     key={song.id}
                     className="flex items-center gap-4 p-3 bg-[#1a1a1a] rounded-md hover:bg-[#242424] transition-colors"
                   >
-                    <div className="w-10 text-[#b3b3b3] text-sm font-medium">{index + 1}</div>
+                    <div className="w-10 text-[#c4c4c4] text-sm font-medium">{index + 1}</div>
                     <div className="relative w-14 h-14 rounded-md overflow-hidden bg-gradient-to-br from-purple-700 to-blue-900 shrink-0">
                       {song.imageUrl && (
                         <img src={song.imageUrl} alt={song.title} className="w-full h-full object-cover" />
@@ -858,11 +865,11 @@ export default function UserDashboard() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-white font-medium truncate">{song.title}</h4>
-                      <p className="text-[#b3b3b3] text-sm truncate">
+                      <p className="text-[#c4c4c4] text-sm truncate">
                         {song.artist?.name || "Unknown"} {song.album && `• ${song.album.title}`}
                       </p>
                     </div>
-                    <div className="text-[#b3b3b3] text-sm">{formatDuration(song.duration)}</div>
+                    <div className="text-[#c4c4c4] text-sm">{formatDuration(song.duration)}</div>
                     <button
                       onClick={async () => {
                         if (!session?.user?.id) return;
@@ -898,10 +905,7 @@ export default function UserDashboard() {
             <div className="bg-[#121212] rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
               <div className="sticky top-0 bg-[#121212] border-b border-[#2a2a2a] p-6 flex items-center justify-between">
                 <h2 className="text-white text-2xl font-bold">Add Song to Library</h2>
-                <button
-                  onClick={() => setShowAddSongModal(false)}
-                  className="text-[#b3b3b3] hover:text-white transition-colors"
-                >
+                <button type="button" onClick={() => setShowAddSongModal(false)} className="text-[#c4c4c4] hover:text-white transition-colors" aria-label="Close add song modal">
                   <X size={24} />
                 </button>
               </div>
@@ -923,7 +927,7 @@ export default function UserDashboard() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <h4 className="text-white font-medium truncate">{song.title}</h4>
-                          <p className="text-[#b3b3b3] text-sm truncate">
+                          <p className="text-[#c4c4c4] text-sm truncate">
                             {song.artist?.name || "Unknown"}
                           </p>
                         </div>
@@ -943,15 +947,16 @@ export default function UserDashboard() {
             <div className="bg-[#121212] rounded-lg max-w-md w-full">
               <div className="p-6">
                 <h2 className="text-white text-2xl font-bold mb-4">Delete Account</h2>
-                <p className="text-[#b3b3b3] mb-6">
+                <p className="text-[#c4c4c4] mb-6">
                   This action cannot be undone. Please enter your password to confirm.
                 </p>
                 <form onSubmit={handleDeleteAccount} className="space-y-4">
                   <div>
-                    <label className="block text-white text-sm font-medium mb-2">
+                    <label htmlFor="delete-account-password" className="block text-white text-sm font-medium mb-2">
                       Password
                     </label>
                     <input
+                      id="delete-account-password"
                       type="password"
                       value={deletePassword}
                       onChange={(e) => setDeletePassword(e.target.value)}
@@ -992,35 +997,35 @@ export default function UserDashboard() {
             {statistics ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="bg-[#121212] rounded-lg p-6">
-                  <h3 className="text-[#b3b3b3] text-sm mb-2">Total Songs Played</h3>
+                  <h3 className="text-[#c4c4c4] text-sm mb-2">Total Songs Played</h3>
                   <p className="text-3xl font-bold text-white">{statistics.totalSongsPlayed}</p>
                 </div>
                 <div className="bg-[#121212] rounded-lg p-6">
-                  <h3 className="text-[#b3b3b3] text-sm mb-2">Total Playlists</h3>
+                  <h3 className="text-[#c4c4c4] text-sm mb-2">Total Playlists</h3>
                   <p className="text-3xl font-bold text-white">{statistics.totalPlaylists}</p>
                 </div>
                 <div className="bg-[#121212] rounded-lg p-6">
-                  <h3 className="text-[#b3b3b3] text-sm mb-2">Favorite Songs</h3>
+                  <h3 className="text-[#c4c4c4] text-sm mb-2">Favorite Songs</h3>
                   <p className="text-3xl font-bold text-white">{statistics.totalFavorites}</p>
                 </div>
                 <div className="bg-[#121212] rounded-lg p-6">
-                  <h3 className="text-[#b3b3b3] text-sm mb-2">My Songs</h3>
+                  <h3 className="text-[#c4c4c4] text-sm mb-2">My Songs</h3>
                   <p className="text-3xl font-bold text-white">{statistics.totalUserSongs}</p>
                 </div>
                 <div className="bg-[#121212] rounded-lg p-6">
-                  <h3 className="text-[#b3b3b3] text-sm mb-2">Listening Time</h3>
+                  <h3 className="text-[#c4c4c4] text-sm mb-2">Listening Time</h3>
                   <p className="text-3xl font-bold text-white">{statistics.totalListeningTime.hours}h</p>
-                  <p className="text-sm text-[#b3b3b3]">{statistics.totalListeningTime.minutes} minutes</p>
+                  <p className="text-sm text-[#c4c4c4]">{statistics.totalListeningTime.minutes} minutes</p>
                 </div>
                 <div className="bg-[#121212] rounded-lg p-6">
-                  <h3 className="text-[#b3b3b3] text-sm mb-2">Recently Played</h3>
+                  <h3 className="text-[#c4c4c4] text-sm mb-2">Recently Played</h3>
                   <p className="text-3xl font-bold text-white">{statistics.recentlyPlayedCount}</p>
                 </div>
               </div>
             ) : (
               <div className="text-center py-12 bg-[#121212] rounded-lg">
-                <BarChart3 size={48} className="mx-auto mb-4 text-[#b3b3b3]" />
-                <p className="text-[#b3b3b3]">No statistics available yet</p>
+                <BarChart3 size={48} className="mx-auto mb-4 text-[#c4c4c4]" />
+                <p className="text-[#c4c4c4]">No statistics available yet</p>
               </div>
             )}
           </div>
@@ -1037,7 +1042,7 @@ export default function UserDashboard() {
                     key={entry.id}
                     className="flex items-center gap-4 p-3 bg-[#1a1a1a] rounded-md hover:bg-[#242424] transition-colors"
                   >
-                    <div className="w-10 text-[#b3b3b3] text-sm font-medium">{index + 1}</div>
+                    <div className="w-10 text-[#c4c4c4] text-sm font-medium">{index + 1}</div>
                     <div className="relative w-14 h-14 rounded-md overflow-hidden bg-gradient-to-br from-purple-700 to-blue-900 shrink-0">
                       {entry.song.imageUrl && (
                         <img src={entry.song.imageUrl} alt={entry.song.title} className="w-full h-full object-cover" />
@@ -1045,18 +1050,18 @@ export default function UserDashboard() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-white font-medium truncate">{entry.song.title}</h4>
-                      <p className="text-[#b3b3b3] text-sm truncate">
+                      <p className="text-[#c4c4c4] text-sm truncate">
                         {entry.song.artist?.name || "Unknown"} • {new Date(entry.playedAt).toLocaleDateString()}
                       </p>
                     </div>
-                    <div className="text-[#b3b3b3] text-sm">{formatDuration(entry.song.duration)}</div>
+                    <div className="text-[#c4c4c4] text-sm">{formatDuration(entry.song.duration)}</div>
                   </div>
                 ))}
               </div>
             ) : (
               <div className="text-center py-12 bg-[#121212] rounded-lg">
-                <History size={48} className="mx-auto mb-4 text-[#b3b3b3]" />
-                <p className="text-[#b3b3b3]">No listening history yet</p>
+                <History size={48} className="mx-auto mb-4 text-[#c4c4c4]" />
+                <p className="text-[#c4c4c4]">No listening history yet</p>
               </div>
             )}
           </div>
@@ -1085,14 +1090,14 @@ export default function UserDashboard() {
                       )}
                     </div>
                     <h3 className="text-white font-medium truncate mb-1">{playlist.name}</h3>
-                    <p className="text-[#b3b3b3] text-sm">{playlist._count?.songs || 0} songs</p>
+                    <p className="text-[#c4c4c4] text-sm">{playlist._count?.songs || 0} songs</p>
                   </div>
                 ))}
               </div>
             ) : (
               <div className="text-center py-12 bg-[#121212] rounded-lg">
-                <ListMusic size={48} className="mx-auto mb-4 text-[#b3b3b3]" />
-                <p className="text-[#b3b3b3]">No playlists yet</p>
+                <ListMusic size={48} className="mx-auto mb-4 text-[#c4c4c4]" />
+                <p className="text-[#c4c4c4]">No playlists yet</p>
               </div>
             )}
           </div>
@@ -1116,14 +1121,14 @@ export default function UserDashboard() {
                       )}
                     </div>
                     <h3 className="text-white font-medium truncate text-sm mb-1">{artist.name}</h3>
-                    <p className="text-[#b3b3b3] text-xs">{artist.playCount} plays</p>
+                    <p className="text-[#c4c4c4] text-xs">{artist.playCount} plays</p>
                   </div>
                 ))}
               </div>
             ) : (
               <div className="text-center py-12 bg-[#121212] rounded-lg">
-                <TrendingUp size={48} className="mx-auto mb-4 text-[#b3b3b3]" />
-                <p className="text-[#b3b3b3]">No top artists yet</p>
+                <TrendingUp size={48} className="mx-auto mb-4 text-[#c4c4c4]" />
+                <p className="text-[#c4c4c4]">No top artists yet</p>
               </div>
             )}
 
@@ -1143,14 +1148,14 @@ export default function UserDashboard() {
                         )}
                       </div>
                       <h3 className="text-white font-medium truncate text-sm mb-1">{album.title}</h3>
-                      <p className="text-[#b3b3b3] text-xs truncate">{album.artist?.name}</p>
-                      <p className="text-[#b3b3b3] text-xs mt-1">{album.playCount} plays</p>
+                      <p className="text-[#c4c4c4] text-xs truncate">{album.artist?.name}</p>
+                      <p className="text-[#c4c4c4] text-xs mt-1">{album.playCount} plays</p>
                     </div>
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-12 bg-[#121212] rounded-lg">
-                  <p className="text-[#b3b3b3]">No top albums yet</p>
+                  <p className="text-[#c4c4c4]">No top albums yet</p>
                 </div>
               )}
             </div>
@@ -1178,7 +1183,7 @@ export default function UserDashboard() {
                 <div className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-lg">
                   <div>
                     <h3 className="text-white font-medium">Public Profile</h3>
-                    <p className="text-[#b3b3b3] text-sm">Allow others to see your profile</p>
+                    <p className="text-[#c4c4c4] text-sm">Allow others to see your profile</p>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
@@ -1194,7 +1199,7 @@ export default function UserDashboard() {
                 <div className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-lg">
                   <div>
                     <h3 className="text-white font-medium">Public Statistics</h3>
-                    <p className="text-[#b3b3b3] text-sm">Allow others to see your listening statistics</p>
+                    <p className="text-[#c4c4c4] text-sm">Allow others to see your listening statistics</p>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
@@ -1210,7 +1215,7 @@ export default function UserDashboard() {
                 <div className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-lg">
                   <div>
                     <h3 className="text-white font-medium">Public Playlists</h3>
-                    <p className="text-[#b3b3b3] text-sm">Allow others to see your playlists</p>
+                    <p className="text-[#c4c4c4] text-sm">Allow others to see your playlists</p>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
@@ -1226,7 +1231,7 @@ export default function UserDashboard() {
                 <div className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-lg">
                   <div>
                     <h3 className="text-white font-medium">Public Favorites</h3>
-                    <p className="text-[#b3b3b3] text-sm">Allow others to see your favorite songs</p>
+                    <p className="text-[#c4c4c4] text-sm">Allow others to see your favorite songs</p>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
@@ -1266,7 +1271,7 @@ export default function UserDashboard() {
                       }
                     }}
                   >
-                    <div className="w-10 text-[#b3b3b3] text-sm font-medium">{index + 1}</div>
+                    <div className="w-10 text-[#c4c4c4] text-sm font-medium">{index + 1}</div>
                     <div className="relative w-14 h-14 rounded-md overflow-hidden bg-gradient-to-br from-purple-700 to-blue-900 shrink-0">
                       {song.imageUrl && (
                         <img src={song.imageUrl} alt={song.title} className="w-full h-full object-cover" />
@@ -1274,18 +1279,18 @@ export default function UserDashboard() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-white font-medium truncate">{song.title}</h4>
-                      <p className="text-[#b3b3b3] text-sm truncate">
+                      <p className="text-[#c4c4c4] text-sm truncate">
                         {song.artist?.name || "Unknown"} {song.album && `• ${song.album.title}`}
                       </p>
                     </div>
-                    <div className="text-[#b3b3b3] text-sm">{formatDuration(song.duration)}</div>
+                    <div className="text-[#c4c4c4] text-sm">{formatDuration(song.duration)}</div>
                   </div>
                 ))}
               </div>
             ) : (
               <div className="text-center py-12 bg-[#121212] rounded-lg">
-                <Lightbulb size={48} className="mx-auto mb-4 text-[#b3b3b3]" />
-                <p className="text-[#b3b3b3]">No recommendations available yet. Start listening to get personalized recommendations!</p>
+                <Lightbulb size={48} className="mx-auto mb-4 text-[#c4c4c4]" />
+                <p className="text-[#c4c4c4]">No recommendations available yet. Start listening to get personalized recommendations!</p>
               </div>
             )}
           </div>
@@ -1304,7 +1309,7 @@ export default function UserDashboard() {
                     key={song.id}
                     className="flex items-center gap-4 p-3 bg-[#1a1a1a] rounded-md hover:bg-[#242424] transition-colors"
                   >
-                    <div className="w-10 text-[#b3b3b3] text-sm font-medium">{index + 1}</div>
+                    <div className="w-10 text-[#c4c4c4] text-sm font-medium">{index + 1}</div>
                     <div className="relative w-14 h-14 rounded-md overflow-hidden bg-gradient-to-br from-purple-700 to-blue-900 shrink-0">
                       {song.imageUrl && (
                         <img src={song.imageUrl} alt={song.title} className="w-full h-full object-cover" />
@@ -1312,11 +1317,11 @@ export default function UserDashboard() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-white font-medium truncate">{song.title}</h4>
-                      <p className="text-[#b3b3b3] text-sm truncate">
+                      <p className="text-[#c4c4c4] text-sm truncate">
                         {song.artist?.name || "Unknown"} {song.album && `• ${song.album.title}`}
                       </p>
                     </div>
-                    <div className="text-[#b3b3b3] text-sm">{formatDuration(song.duration)}</div>
+                    <div className="text-[#c4c4c4] text-sm">{formatDuration(song.duration)}</div>
                     <button
                       onClick={async () => {
                         if (!session?.user?.id) return;
@@ -1337,8 +1342,8 @@ export default function UserDashboard() {
               </div>
             ) : (
               <div className="text-center py-12 bg-[#121212] rounded-lg">
-                <Download size={48} className="mx-auto mb-4 text-[#b3b3b3]" />
-                <p className="text-[#b3b3b3] mb-4">No downloaded songs yet</p>
+                <Download size={48} className="mx-auto mb-4 text-[#c4c4c4]" />
+                <p className="text-[#c4c4c4] mb-4">No downloaded songs yet</p>
                 <button
                   onClick={() => setActiveTab("my-songs")}
                   className="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-6 py-3 rounded-full transition-colors"
@@ -1358,16 +1363,16 @@ export default function UserDashboard() {
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="bg-[#121212] rounded-lg p-6">
-                    <h3 className="text-[#b3b3b3] text-sm mb-2">Total Plays</h3>
+                    <h3 className="text-[#c4c4c4] text-sm mb-2">Total Plays</h3>
                     <p className="text-3xl font-bold text-white">{yearInReview.totalPlays}</p>
                   </div>
                   <div className="bg-[#121212] rounded-lg p-6">
-                    <h3 className="text-[#b3b3b3] text-sm mb-2">Listening Time</h3>
+                    <h3 className="text-[#c4c4c4] text-sm mb-2">Listening Time</h3>
                     <p className="text-3xl font-bold text-white">{yearInReview.totalTime.hours}h</p>
-                    <p className="text-sm text-[#b3b3b3]">{yearInReview.totalTime.minutes} minutes</p>
+                    <p className="text-sm text-[#c4c4c4]">{yearInReview.totalTime.minutes} minutes</p>
                   </div>
                   <div className="bg-[#121212] rounded-lg p-6">
-                    <h3 className="text-[#b3b3b3] text-sm mb-2">Year</h3>
+                    <h3 className="text-[#c4c4c4] text-sm mb-2">Year</h3>
                     <p className="text-3xl font-bold text-white">{yearInReview.year}</p>
                   </div>
                 </div>
@@ -1381,7 +1386,7 @@ export default function UserDashboard() {
                           key={song.id}
                           className="flex items-center gap-4 p-3 bg-[#1a1a1a] rounded-md hover:bg-[#242424] transition-colors"
                         >
-                          <div className="w-10 text-[#b3b3b3] text-sm font-medium">{index + 1}</div>
+                          <div className="w-10 text-[#c4c4c4] text-sm font-medium">{index + 1}</div>
                           <div className="relative w-14 h-14 rounded-md overflow-hidden bg-gradient-to-br from-purple-700 to-blue-900 shrink-0">
                             {song.imageUrl && (
                               <img src={song.imageUrl} alt={song.title} className="w-full h-full object-cover" />
@@ -1389,7 +1394,7 @@ export default function UserDashboard() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="text-white font-medium truncate">{song.title}</h4>
-                            <p className="text-[#b3b3b3] text-sm truncate">
+                            <p className="text-[#c4c4c4] text-sm truncate">
                               {song.artist?.name || "Unknown"} • {song.playCount} plays
                             </p>
                           </div>
@@ -1437,7 +1442,7 @@ export default function UserDashboard() {
                             )}
                           </div>
                           <h4 className="text-white font-medium truncate text-sm mb-1">{album.title}</h4>
-                          <p className="text-[#b3b3b3] text-xs truncate">{album.artist?.name}</p>
+                          <p className="text-[#c4c4c4] text-xs truncate">{album.artist?.name}</p>
                         </div>
                       ))}
                     </div>
@@ -1446,8 +1451,8 @@ export default function UserDashboard() {
               </div>
             ) : (
               <div className="text-center py-12 bg-[#121212] rounded-lg">
-                <Calendar size={48} className="mx-auto mb-4 text-[#b3b3b3]" />
-                <p className="text-[#b3b3b3]">No data available for this year yet. Start listening to build your year in review!</p>
+                <Calendar size={48} className="mx-auto mb-4 text-[#c4c4c4]" />
+                <p className="text-[#c4c4c4]">No data available for this year yet. Start listening to build your year in review!</p>
               </div>
             )}
           </div>

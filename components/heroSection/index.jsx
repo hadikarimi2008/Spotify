@@ -252,6 +252,7 @@ export default function HeroSection() {
   return (
     <div className="w-full md:ml-5 flex-1 bg-[#121212] h-[calc(100vh-200px)] md:h-[80svh] rounded-[8px] md:rounded-[10px] overflow-y-auto overflow-x-hidden hero-scrollbar pb-20 md:pb-0">
       <div className="p-4 md:p-6">
+        <h1 className="sr-only">Home - Discover music</h1>
         {/* Top Artists Section */}
         {artists.length > 0 && (
           <div className="mb-6 md:mb-8">
@@ -279,7 +280,7 @@ export default function HeroSection() {
                       <div className="w-full h-full" />
                     )}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                      <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#1DB954] hover:bg-[#1ed760] rounded-full p-2 md:p-3 shadow-lg">
+                      <button type="button" aria-label={`Play artist ${artist.name}`} className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#1DB954] hover:bg-[#1ed760] rounded-full p-2 md:p-3 shadow-lg">
                         <Play
                           size={20}
                           className="md:w-6 md:h-6"
@@ -328,7 +329,7 @@ export default function HeroSection() {
                       <div className="w-full h-full" />
                     )}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                      <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#1DB954] hover:bg-[#1ed760] rounded-full p-3 shadow-lg">
+                      <button type="button" aria-label={`Play album ${album.title}`} className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#1DB954] hover:bg-[#1ed760] rounded-full p-3 shadow-lg">
                         <Play size={24} fill="black" />
                       </button>
                     </div>
@@ -336,7 +337,7 @@ export default function HeroSection() {
                   <h3 className="text-white font-semibold text-sm md:text-base truncate mb-1">
                     {album.title}
                   </h3>
-                  <p className="text-[#b3b3b3] text-xs md:text-sm truncate">
+                  <p className="text-[#c4c4c4] text-xs md:text-sm truncate">
                     {album.artist?.name || "Unknown Artist"}
                   </p>
                 </div>
@@ -357,7 +358,7 @@ export default function HeroSection() {
             className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium transition-colors whitespace-nowrap ${
               selectedGenre === null
                 ? "bg-[#1DB954] text-white"
-                : "bg-[#242424] text-[#b3b3b3] hover:bg-[#2a2a2a] hover:text-white"
+                : "bg-[#242424] text-[#c4c4c4] hover:bg-[#2a2a2a] hover:text-white"
             }`}
           >
             All
@@ -369,7 +370,7 @@ export default function HeroSection() {
               className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium transition-colors whitespace-nowrap ${
                 selectedGenre === genre
                   ? "bg-[#1DB954] text-white"
-                  : "bg-[#242424] text-[#b3b3b3] hover:bg-[#2a2a2a] hover:text-white"
+                  : "bg-[#242424] text-[#c4c4c4] hover:bg-[#2a2a2a] hover:text-white"
               }`}
             >
               {genre}
@@ -378,7 +379,7 @@ export default function HeroSection() {
         </div>
 
         {songs.length === 0 ? (
-          <div className="text-[#b3b3b3] text-center py-12">No songs found</div>
+          <div className="text-[#c4c4c4] text-center py-12">No songs found</div>
         ) : (
           <div className="space-y-2">
             {songs.map((song, index) => {
@@ -389,7 +390,7 @@ export default function HeroSection() {
                   className="flex items-center gap-2 md:gap-4 p-2 rounded-md hover:bg-[#1a1a1a] transition-colors group cursor-pointer"
                   onClick={() => handlePlaySong(song)}
                 >
-                  <div className="w-6 md:w-10 text-[#b3b3b3] text-xs md:text-sm font-medium shrink-0">
+                  <div className="w-6 md:w-10 text-[#c4c4c4] text-xs md:text-sm font-medium shrink-0">
                     {index + 1}
                   </div>
                   <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-md overflow-hidden shrink-0">
@@ -414,32 +415,34 @@ export default function HeroSection() {
                       <Link
                         href={`/artist/${song.artist.id}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="text-[#b3b3b3] text-[10px] md:text-xs truncate hover:underline hover:text-white"
+                        className="text-[#c4c4c4] text-[10px] md:text-xs truncate hover:underline hover:text-white"
                       >
                         {song.artist.name}
                       </Link>
                     ) : (
-                      <p className="text-[#b3b3b3] text-[10px] md:text-xs truncate">
+                      <p className="text-[#c4c4c4] text-[10px] md:text-xs truncate">
                         Unknown Artist
                       </p>
                     )}
                   </div>
-                  <div className="hidden md:block text-[#b3b3b3] text-sm">
+                  <div className="hidden md:block text-[#c4c4c4] text-sm">
                     {song.album?.title || "-"}
                   </div>
-                  <div className="hidden lg:block text-[#b3b3b3] text-sm">
+                  <div className="hidden lg:block text-[#c4c4c4] text-sm">
                     {formatDuration(song.duration)}
                   </div>
                   <div className="flex items-center gap-1 md:gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity shrink-0">
                     <button
+                      type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleFavorite(song);
                       }}
+                      aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
                       className={`transition-colors ${
                         isFavorite
                           ? "text-[#1DB954] hover:text-[#1ed760]"
-                          : "text-[#b3b3b3] hover:text-white"
+                          : "text-[#c4c4c4] hover:text-white"
                       }`}
                       title={
                         isFavorite
@@ -453,11 +456,7 @@ export default function HeroSection() {
                         fill={isFavorite ? "currentColor" : "none"}
                       />
                     </button>
-                    <button
-                      onClick={(e) => handleShare(e, song)}
-                      className="text-[#b3b3b3] hover:text-white transition-colors"
-                      title="Share"
-                    >
+                    <button type="button" onClick={(e) => handleShare(e, song)} aria-label={`Share ${song.title}`} className="text-[#c4c4c4] hover:text-white transition-colors" title="Share">
                       <Share2 size={16} className="md:w-[18px] md:h-[18px]" />
                     </button>
                   </div>

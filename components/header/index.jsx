@@ -123,9 +123,11 @@ export default function Header() {
                 )}
               </Link>
               <button
+                type="button"
                 onClick={handleLogout}
                 className="p-1.5 hover:scale-105 transition-transform"
                 title="Logout"
+                aria-label="Logout"
               >
                 <LogOut size={18} color="#d1d1d1" />
               </button>
@@ -139,9 +141,11 @@ export default function Header() {
             </button>
           )}
           <div className="relative">
-            <button 
+            <button
+              type="button"
               onClick={() => setShowNotifications(!showNotifications)}
               className="p-1.5 hover:scale-105 transition-transform"
+              aria-label="Notifications"
             >
               <Bell size={18} color="#d1d1d1" />
             </button>
@@ -149,15 +153,12 @@ export default function Header() {
               <div className="absolute right-0 top-full mt-2 w-72 bg-[#242424] rounded-lg shadow-xl border border-[#333] z-50">
                 <div className="p-3 border-b border-[#333] flex items-center justify-between">
                   <h3 className="text-white font-bold text-sm">Notifications</h3>
-                  <button
-                    onClick={() => setShowNotifications(false)}
-                    className="text-[#b3b3b3] hover:text-white"
-                  >
+                  <button type="button" onClick={() => setShowNotifications(false)} className="text-[#c4c4c4] hover:text-white" aria-label="Close notifications">
                     <X size={16} />
                   </button>
                 </div>
                 <div className="p-6 text-center">
-                  <p className="text-[#b3b3b3] text-sm">You have no messages</p>
+                  <p className="text-[#c4c4c4] text-sm">You have no messages</p>
                 </div>
               </div>
             )}
@@ -166,17 +167,20 @@ export default function Header() {
       </div>
 
       <div className="flex items-center flex-1 justify-center px-2 md:px-4 w-full md:w-auto relative" ref={searchRef}>
-        <form onSubmit={handleSearchSubmit} className="relative group w-full max-w-[474px]">
-          <span className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 text-[#b3b3b3] group-focus-within:text-white transition-colors">
+        <form onSubmit={handleSearchSubmit} className="relative group w-full max-w-[474px]" role="search">
+          <label htmlFor="header-search" className="sr-only">Search for songs and artists</label>
+          <span className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 text-[#c4c4c4] group-focus-within:text-white transition-colors" aria-hidden="true">
             <Search size={18} strokeWidth={2.5} className="md:w-5 md:h-5" />
           </span>
 
           <input
-            type="text"
+            id="header-search"
+            type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => searchQuery.trim() && setShowSearchResults(true)}
-            className="bg-[#242424] w-full h-[38px] md:h-[48px] text-[13px] md:text-[14px] font-medium text-white rounded-full pl-9 md:pl-12 pr-3 md:pr-4 outline-none border border-transparent hover:bg-[#2a2a2a] hover:border-[#333] focus:border-white focus:bg-[#2a2a2a] transition-all placeholder-[#757575] placeholder:font-normal"
+            aria-label="Search for songs and artists"
+            className="bg-[#242424] w-full h-[38px] md:h-[48px] text-[13px] md:text-[14px] font-medium text-white rounded-full pl-9 md:pl-12 pr-3 md:pr-4 outline-none border border-transparent hover:bg-[#2a2a2a] hover:border-[#333] focus:border-white focus:bg-[#2a2a2a] transition-all placeholder-[#9e9e9e] placeholder:font-normal"
             placeholder="What do you want to play?"
           />
         </form>
@@ -219,7 +223,7 @@ export default function Header() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-medium truncate">{song.title}</p>
-                          <p className="text-[#b3b3b3] text-xs truncate">{song.artist?.name}</p>
+                          <p className="text-[#c4c4c4] text-xs truncate">{song.artist?.name}</p>
                         </div>
                       </div>
                     ))}
@@ -292,7 +296,7 @@ export default function Header() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-medium truncate">{album.title}</p>
-                          <p className="text-[#b3b3b3] text-xs truncate">{album.artist?.name}</p>
+                          <p className="text-[#c4c4c4] text-xs truncate">{album.artist?.name}</p>
                         </div>
                       </div>
                     ))}
@@ -349,11 +353,7 @@ export default function Header() {
                 {session.user.name || session.user.email}
               </span>
             </Link>
-            <button
-              onClick={handleLogout}
-              className="p-2 hover:scale-105 transition-transform"
-              title="Logout"
-            >
+            <button type="button" onClick={handleLogout} className="p-2 hover:scale-105 transition-transform" title="Logout" aria-label="Logout">
               <LogOut size={20} color="#d1d1d1" className="md:w-6 md:h-6" />
             </button>
           </>
@@ -366,25 +366,19 @@ export default function Header() {
           </button>
         )}
         <div className="relative">
-          <button 
-            onClick={() => setShowNotifications(!showNotifications)}
-            className="p-2 hover:scale-105 transition-transform"
-          >
+          <button type="button" onClick={() => setShowNotifications(!showNotifications)} className="p-2 hover:scale-105 transition-transform" aria-label="Notifications">
           <Bell size={20} color="#d1d1d1" className="md:w-6 md:h-6" />
         </button>
           {showNotifications && (
             <div className="absolute right-0 top-full mt-2 w-80 bg-[#242424] rounded-lg shadow-xl border border-[#333] z-50">
               <div className="p-4 border-b border-[#333] flex items-center justify-between">
                 <h3 className="text-white font-bold">Notifications</h3>
-                <button
-                  onClick={() => setShowNotifications(false)}
-                  className="text-[#b3b3b3] hover:text-white"
-                >
+                <button type="button" onClick={() => setShowNotifications(false)} className="text-[#c4c4c4] hover:text-white" aria-label="Close notifications">
                   <X size={18} />
                 </button>
               </div>
               <div className="p-8 text-center">
-                <p className="text-[#b3b3b3]">You have no messages</p>
+                <p className="text-[#c4c4c4]">You have no messages</p>
               </div>
             </div>
           )}

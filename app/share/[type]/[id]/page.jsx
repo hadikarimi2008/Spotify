@@ -169,7 +169,7 @@ export default async function SharePage({ params }) {
         <div className="text-center">
           <Image src={logo} alt="Spotify" width={120} height={120} className="mx-auto mb-4" />
           <h1 className="text-white text-2xl font-bold mb-2">Content not found</h1>
-          <p className="text-[#b3b3b3]">The content you're looking for doesn't exist.</p>
+          <p className="text-[#c4c4c4]">The content you're looking for doesn't exist.</p>
         </div>
       </div>
     );

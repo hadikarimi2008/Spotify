@@ -299,7 +299,7 @@ export default function AdminDashboard() {
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-white text-2xl font-bold mb-4">Access Denied</h1>
-          <p className="text-[#b3b3b3]">You don't have permission to access this page.</p>
+          <p className="text-[#c4c4c4]">You don't have permission to access this page.</p>
         </div>
       </div>
     );
@@ -329,22 +329,16 @@ export default function AdminDashboard() {
               </div>
               <div className="flex-1 min-w-0">
                 <h4 className="text-white font-medium truncate">{song.title}</h4>
-                <p className="text-[#b3b3b3] text-sm truncate">
+                <p className="text-[#c4c4c4] text-sm truncate">
                   {song.artist?.name || "Unknown"} {song.album && `• ${song.album.title}`}
                 </p>
               </div>
-              <div className="text-[#b3b3b3] text-sm">{formatDuration(song.duration)}</div>
+              <div className="text-[#c4c4c4] text-sm">{formatDuration(song.duration)}</div>
               <div className="flex items-center gap-2">
-                <button
-                  onClick={() => openEditModal(song)}
-                  className="p-2 text-[#b3b3b3] hover:text-white transition-colors"
-                >
+                <button type="button" onClick={() => openEditModal(song)} className="p-2 text-[#c4c4c4] hover:text-white transition-colors" aria-label={`Edit ${song.title}`}>
                   <Edit size={18} />
                 </button>
-                <button
-                  onClick={() => handleDelete(song.id)}
-                  className="p-2 text-[#b3b3b3] hover:text-red-400 transition-colors"
-                >
+                <button type="button" onClick={() => handleDelete(song.id)} className="p-2 text-[#c4c4c4] hover:text-red-400 transition-colors" aria-label={`Delete ${song.title}`}>
                   <Trash2 size={18} />
                 </button>
               </div>
@@ -363,19 +357,22 @@ export default function AdminDashboard() {
         <>
           <div className="mb-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b3b3b3]" size={20} />
+              <label htmlFor="admin-search-artists" className="sr-only">Search artists</label>
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#c4c4c4]" size={20} aria-hidden="true" />
               <input
-                type="text"
+                id="admin-search-artists"
+                type="search"
                 value={artistSearchQuery}
                 onChange={(e) => setArtistSearchQuery(e.target.value)}
                 placeholder="Search artists..."
+                aria-label="Search artists"
                 className="w-full bg-[#242424] text-white rounded-md pl-10 pr-4 py-2 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all"
               />
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredArtists.length === 0 ? (
-              <div className="col-span-full text-center py-12 text-[#b3b3b3]">
+              <div className="col-span-full text-center py-12 text-[#c4c4c4]">
                 {artistSearchQuery ? "No artists found" : "No artists yet"}
               </div>
             ) : (
@@ -390,7 +387,7 @@ export default function AdminDashboard() {
                 )}
               </div>
               <h3 className="text-white font-semibold mb-1">{artist.name}</h3>
-              <p className="text-[#b3b3b3] text-sm mb-3">
+              <p className="text-[#c4c4c4] text-sm mb-3">
                 {artist._count?.songs || 0} songs • {artist._count?.albums || 0} albums
               </p>
               <div className="flex items-center gap-2">
@@ -429,8 +426,8 @@ export default function AdminDashboard() {
                 )}
               </div>
               <h3 className="text-white font-semibold mb-1">{album.title}</h3>
-              <p className="text-[#b3b3b3] text-sm mb-1">{album.artist?.name || "Unknown"}</p>
-              <p className="text-[#b3b3b3] text-xs mb-3">{album.releaseYear} • {album._count?.songs || 0} songs</p>
+              <p className="text-[#c4c4c4] text-sm mb-1">{album.artist?.name || "Unknown"}</p>
+              <p className="text-[#c4c4c4] text-xs mb-3">{album.releaseYear} • {album._count?.songs || 0} songs</p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => openEditModal(album)}
@@ -465,7 +462,7 @@ export default function AdminDashboard() {
                 )}
               </div>
               <h3 className="text-white font-semibold mb-1">{playlist.name}</h3>
-              <p className="text-[#b3b3b3] text-sm mb-3">
+              <p className="text-[#c4c4c4] text-sm mb-3">
                 {playlist._count?.songs || 0} songs
               </p>
               <div className="flex items-center gap-2">
@@ -501,7 +498,7 @@ export default function AdminDashboard() {
             </h2>
             <button
               onClick={closeModal}
-              className="text-[#b3b3b3] hover:text-white transition-colors"
+              className="text-[#c4c4c4] hover:text-white transition-colors"
             >
               <X size={24} />
             </button>
@@ -511,8 +508,9 @@ export default function AdminDashboard() {
             {activeTab === "songs" && (
               <>
                 <div>
-                  <label className="block text-white text-sm font-medium mb-2">Title *</label>
+                  <label htmlFor="admin-song-title" className="block text-white text-sm font-medium mb-2">Title *</label>
                   <input
+                    id="admin-song-title"
                     type="text"
                     value={formData.title || ""}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
@@ -521,9 +519,10 @@ export default function AdminDashboard() {
                   />
                 </div>
                 <div>
-                  <label className="block text-white text-sm font-medium mb-2">Artist Name *</label>
+                  <label htmlFor="admin-song-artist" className="block text-white text-sm font-medium mb-2">Artist Name *</label>
                   <div className="relative">
                     <input
+                      id="admin-song-artist"
                       type="text"
                       list="artist-list-songs"
                       value={formData.artistName || formData.artist?.name || ""}
@@ -538,7 +537,7 @@ export default function AdminDashboard() {
                       ))}
                     </datalist>
                   </div>
-                  <p className="text-[#b3b3b3] text-xs mt-1">Select from list or type a new artist name</p>
+                  <p className="text-[#c4c4c4] text-xs mt-1">Select from list or type a new artist name</p>
                 </div>
                 <div>
                   <label className="block text-white text-sm font-medium mb-2">Album Name</label>
@@ -549,7 +548,7 @@ export default function AdminDashboard() {
                     placeholder="Enter album name (optional)"
                     className="w-full bg-[#242424] text-white rounded-md px-4 py-2 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all"
                   />
-                  <p className="text-[#b3b3b3] text-xs mt-1">Album will be created if it doesn't exist</p>
+                  <p className="text-[#c4c4c4] text-xs mt-1">Album will be created if it doesn't exist</p>
                 </div>
                 {formData.albumName && (
                   <div>
@@ -609,13 +608,13 @@ export default function AdminDashboard() {
                     className="w-full bg-[#242424] text-white rounded-md px-4 py-2 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   {uploadingFile && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Uploading...</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Uploading...</p>
                   )}
                   {formData.songUrl && !uploadingFile && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Current: {formData.songUrl}</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Current: {formData.songUrl}</p>
                   )}
                   {modalType === "edit" && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Leave empty to keep current file</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Leave empty to keep current file</p>
                   )}
                 </div>
                 <div>
@@ -639,16 +638,16 @@ export default function AdminDashboard() {
                     className="w-full bg-[#242424] text-white rounded-md px-4 py-2 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   {uploadingFile && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Uploading...</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Uploading...</p>
                   )}
                   {formData.imageUrl && !uploadingFile && (
                     <div className="mt-2">
-                      <p className="text-[#b3b3b3] text-xs mb-1">Current: {formData.imageUrl}</p>
+                      <p className="text-[#c4c4c4] text-xs mb-1">Current: {formData.imageUrl}</p>
                       <img src={formData.imageUrl} alt="Preview" className="w-20 h-20 object-cover rounded-md" />
                     </div>
                   )}
                   {modalType === "edit" && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Leave empty to keep current file</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Leave empty to keep current file</p>
                   )}
                 </div>
               </>
@@ -695,16 +694,16 @@ export default function AdminDashboard() {
                     className="w-full bg-[#242424] text-white rounded-md px-4 py-2 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   {uploadingFile && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Uploading...</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Uploading...</p>
                   )}
                   {formData.imageUrl && !uploadingFile && (
                     <div className="mt-2">
-                      <p className="text-[#b3b3b3] text-xs mb-1">Current: {formData.imageUrl}</p>
+                      <p className="text-[#c4c4c4] text-xs mb-1">Current: {formData.imageUrl}</p>
                       <img src={formData.imageUrl} alt="Preview" className="w-20 h-20 object-cover rounded-full" />
                     </div>
                   )}
                   {modalType === "edit" && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Leave empty to keep current image</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Leave empty to keep current image</p>
                   )}
                 </div>
                 <div className="flex items-center gap-2">
@@ -750,7 +749,7 @@ export default function AdminDashboard() {
                       ))}
                     </datalist>
                   </div>
-                  <p className="text-[#b3b3b3] text-xs mt-1">Select from list or type a new artist name</p>
+                  <p className="text-[#c4c4c4] text-xs mt-1">Select from list or type a new artist name</p>
                 </div>
                 <div>
                   <label className="block text-white text-sm font-medium mb-2">Release Year *</label>
@@ -782,16 +781,16 @@ export default function AdminDashboard() {
                     className="w-full bg-[#242424] text-white rounded-md px-4 py-2 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   {uploadingFile && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Uploading...</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Uploading...</p>
                   )}
                   {formData.imageUrl && !uploadingFile && (
                     <div className="mt-2">
-                      <p className="text-[#b3b3b3] text-xs mb-1">Current: {formData.imageUrl}</p>
+                      <p className="text-[#c4c4c4] text-xs mb-1">Current: {formData.imageUrl}</p>
                       <img src={formData.imageUrl} alt="Preview" className="w-20 h-20 object-cover rounded-md" />
                     </div>
                   )}
                   {modalType === "edit" && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Leave empty to keep current image</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Leave empty to keep current image</p>
                   )}
                 </div>
               </>
@@ -833,7 +832,7 @@ export default function AdminDashboard() {
                     className="w-full bg-[#242424] text-white rounded-md px-4 py-2 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all"
                   />
                   {formData.imageUrl && (
-                    <p className="text-[#b3b3b3] text-xs mt-1">Current: {formData.imageUrl}</p>
+                    <p className="text-[#c4c4c4] text-xs mt-1">Current: {formData.imageUrl}</p>
                   )}
                 </div>
               </>
@@ -878,7 +877,7 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto p-4 md:p-6">
         <div className="mb-6 md:mb-8">
           <h1 className="text-2xl md:text-4xl font-bold mb-2">Admin Dashboard</h1>
-          <p className="text-[#b3b3b3] text-sm md:text-base">Manage your music library</p>
+          <p className="text-[#c4c4c4] text-sm md:text-base">Manage your music library</p>
         </div>
 
         <div className="flex items-center gap-2 mb-4 md:mb-6 border-b border-[#2a2a2a] overflow-x-auto">
@@ -887,7 +886,7 @@ export default function AdminDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "songs"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <Music size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -898,7 +897,7 @@ export default function AdminDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "artists"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <User size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -909,7 +908,7 @@ export default function AdminDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "albums"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <Disc size={18} className="md:size-[20px] inline mr-1 md:mr-2" />
@@ -920,7 +919,7 @@ export default function AdminDashboard() {
             className={`px-3 md:px-6 py-2 md:py-3 font-medium transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "playlists"
                 ? "border-[#1DB954] text-white"
-                : "border-transparent text-[#b3b3b3] hover:text-white"
+                : "border-transparent text-[#c4c4c4] hover:text-white"
             }`}
           >
             <ListMusic size={18} className="md:size-[20px] inline mr-1 md:mr-2" />

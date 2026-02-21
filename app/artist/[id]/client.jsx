@@ -236,13 +236,13 @@ export default function ArtistPageClient({ artist }) {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
                 {artist.verified && (
-                  <Image src={verified} width={50} height={50} loading="lazy" />
+                  <Image src={verified} width={50} height={50} loading="lazy" alt="Verified artist" />
                 )}
                 <h1 className="text-3xl md:text-5xl lg:text-7xl font-black truncate">
                   {artist.name}
                 </h1>
               </div>
-              <p className="text-[#b3b3b3] text-sm md:text-base mb-4">
+              <p className="text-[#c4c4c4] text-sm md:text-base mb-4">
                 {artist._count.songs} {artist._count.songs === 1 ? "song" : "songs"} •{" "}
                 {artist._count.albums} {artist._count.albums === 1 ? "album" : "albums"}
               </p>
@@ -258,7 +258,7 @@ export default function ArtistPageClient({ artist }) {
                   {artist.bio.length > 150 && (
                     <button
                       onClick={() => setShowFullBio(!showFullBio)}
-                      className="text-[#b3b3b3] hover:text-white text-sm md:text-base font-medium transition-colors"
+                      className="text-[#c4c4c4] hover:text-white text-sm md:text-base font-medium transition-colors"
                     >
                       {showFullBio ? "Show less" : "Show more"}
                     </button>
@@ -273,11 +273,7 @@ export default function ArtistPageClient({ artist }) {
                   <Play size={20} fill="black" />
                   <span className="hidden sm:inline">Play</span>
                 </button>
-                <button
-                  onClick={(e) => handleShare(e, "artist", artist.id)}
-                  className="p-2 md:p-3 border border-[#2a2a2a] hover:border-white rounded-full transition-colors"
-                  title="Share"
-                >
+                <button type="button" onClick={(e) => handleShare(e, "artist", artist.id)} className="p-2 md:p-3 border border-[#2a2a2a] hover:border-white rounded-full transition-colors" title="Share" aria-label="Share artist">
                   <Share2 size={20} />
                 </button>
               </div>
@@ -313,7 +309,7 @@ export default function ArtistPageClient({ artist }) {
                       <div className="w-full h-full" />
                     )}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                      <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#1DB954] hover:bg-[#1ed760] rounded-full p-2 md:p-3 shadow-lg">
+                      <button type="button" aria-label={`Play album ${album.title}`} className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#1DB954] hover:bg-[#1ed760] rounded-full p-2 md:p-3 shadow-lg">
                         <Play size={20} className="md:w-6 md:h-6" fill="black" />
                       </button>
                     </div>
@@ -321,7 +317,7 @@ export default function ArtistPageClient({ artist }) {
                   <h3 className="text-white font-semibold text-sm md:text-base truncate mb-1">
                     {album.title}
                   </h3>
-                  <p className="text-[#b3b3b3] text-xs md:text-sm">{album.releaseYear}</p>
+                  <p className="text-[#c4c4c4] text-xs md:text-sm">{album.releaseYear}</p>
                 </div>
               ))}
             </div>
@@ -341,7 +337,7 @@ export default function ArtistPageClient({ artist }) {
                     className="flex items-center gap-2 md:gap-4 p-2 md:p-3 rounded-md hover:bg-[#1a1a1a] transition-colors group cursor-pointer"
                     onClick={() => handlePlaySong(song)}
                   >
-                    <div className="w-6 md:w-10 text-[#b3b3b3] text-xs md:text-sm font-medium shrink-0">
+                    <div className="w-6 md:w-10 text-[#c4c4c4] text-xs md:text-sm font-medium shrink-0">
                       {index + 1}
                     </div>
                     <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-md overflow-hidden shrink-0">
@@ -366,25 +362,27 @@ export default function ArtistPageClient({ artist }) {
                         <Link
                           href={`/share/album/${song.album.id}`}
                           onClick={(e) => e.stopPropagation()}
-                          className="text-[#b3b3b3] text-[10px] md:text-xs truncate hover:underline hover:text-white block"
+                          className="text-[#c4c4c4] text-[10px] md:text-xs truncate hover:underline hover:text-white block"
                         >
                           {song.album.title}
                         </Link>
                       )}
                     </div>
-                    <div className="hidden md:block text-[#b3b3b3] text-sm">
+                    <div className="hidden md:block text-[#c4c4c4] text-sm">
                       {formatDuration(song.duration)}
                     </div>
                     <div className="flex items-center gap-1 md:gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity shrink-0">
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleFavorite(song);
                         }}
+                        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
                         className={`transition-colors ${
                           isFavorite
                             ? "text-[#1DB954] hover:text-[#1ed760]"
-                            : "text-[#b3b3b3] hover:text-white"
+                            : "text-[#c4c4c4] hover:text-white"
                         }`}
                         title={isFavorite ? "Remove from favorites" : "Add to favorites"}
                       >
@@ -394,11 +392,7 @@ export default function ArtistPageClient({ artist }) {
                           fill={isFavorite ? "currentColor" : "none"}
                         />
                       </button>
-                      <button
-                        onClick={(e) => handleShare(e, "song", song.id)}
-                        className="text-[#b3b3b3] hover:text-white transition-colors"
-                        title="Share"
-                      >
+                      <button type="button" onClick={(e) => handleShare(e, "song", song.id)} className="text-[#c4c4c4] hover:text-white transition-colors" title="Share" aria-label={`Share ${song.title}`}>
                         <Share2 size={16} className="md:w-[18px] md:h-[18px]" />
                       </button>
                     </div>

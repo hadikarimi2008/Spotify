@@ -109,7 +109,7 @@ function SearchContent() {
 
         {!query ? (
           <div className="text-center py-20">
-            <p className="text-[#b3b3b3] text-lg">Start searching for songs, artists, or albums</p>
+            <p className="text-[#c4c4c4] text-lg">Start searching for songs, artists, or albums</p>
           </div>
         ) : (
           <>
@@ -124,7 +124,7 @@ function SearchContent() {
                         className="flex items-center gap-4 p-3 rounded-md hover:bg-[#1a1a1a] transition-colors group cursor-pointer"
                         onClick={() => playSong(song)}
                       >
-                        <div className="w-10 text-[#b3b3b3] text-sm font-medium shrink-0">
+                        <div className="w-10 text-[#c4c4c4] text-sm font-medium shrink-0">
                           {index + 1}
                         </div>
                         <div className="relative w-14 h-14 rounded-md overflow-hidden shrink-0">
@@ -145,18 +145,18 @@ function SearchContent() {
                           <h3 className="text-white font-medium truncate hover:underline">
                             {song.title}
                           </h3>
-                          <p className="text-[#b3b3b3] text-sm truncate">
+                          <p className="text-[#c4c4c4] text-sm truncate">
                             {song.artist?.name || "Unknown Artist"}
                           </p>
                         </div>
-                        <button className="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:scale-110">
+                        <button type="button" aria-label={`Play ${song.title}`} className="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:scale-110">
                           <Play size={20} fill="white" />
                         </button>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-[#b3b3b3]">No songs found</p>
+                  <p className="text-[#c4c4c4]">No songs found</p>
                 )}
               </div>
             )}
@@ -194,7 +194,7 @@ function SearchContent() {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-[#b3b3b3]">No artists found</p>
+                  <p className="text-[#c4c4c4]">No artists found</p>
                 )}
               </div>
             )}
@@ -226,12 +226,12 @@ function SearchContent() {
                           )}
                         </div>
                         <h3 className="text-white font-medium truncate mb-1">{album.title}</h3>
-                        <p className="text-[#b3b3b3] text-sm truncate">{album.artist?.name}</p>
+                        <p className="text-[#c4c4c4] text-sm truncate">{album.artist?.name}</p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-[#b3b3b3]">No albums found</p>
+                  <p className="text-[#c4c4c4]">No albums found</p>
                 )}
               </div>
             )}

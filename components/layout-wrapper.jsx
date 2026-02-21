@@ -17,13 +17,15 @@ export default function LayoutWrapper({ children }) {
   const isLoginPage = pathname === "/login" || pathname === "/signup";
 
   if (isLoginPage) {
-    return <>{children}</>;
+    return <main id="main" role="main">{children}</main>;
   }
 
   return (
     <Container>
       <Header />
-      {children}
+      <main id="main" role="main">
+        {children}
+      </main>
     </Container>
   );
 }

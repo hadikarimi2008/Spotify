@@ -101,7 +101,7 @@ export default function FullscreenPlayer({
           <h1 className="text-xl md:text-4xl lg:text-5xl font-bold text-white mb-2 md:mb-4 truncate">
             {currentSong?.title || "No song selected"}
           </h1>
-          <p className="text-sm md:text-xl lg:text-2xl text-[#b3b3b3] truncate">
+          <p className="text-sm md:text-xl lg:text-2xl text-[#c4c4c4] truncate">
             {currentSong?.artist?.name || "Select a song to play"}
           </p>
         </div>
@@ -114,12 +114,13 @@ export default function FullscreenPlayer({
             max={duration || 0}
             value={currentTime}
             onChange={handleTimeUpdate}
+            aria-label="Seek playback"
             className="w-full h-1 md:h-2 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer accent-[#1DB954] hover:accent-[#1ed760] transition-colors"
             style={{
               background: `linear-gradient(to right, #1DB954 0%, #1DB954 ${(currentTime / (duration || 1)) * 100}%, #4d4d4d ${(currentTime / (duration || 1)) * 100}%, #4d4d4d 100%)`,
             }}
           />
-          <div className="flex justify-between text-xs md:text-sm text-[#b3b3b3] mt-2">
+          <div className="flex justify-between text-xs md:text-sm text-[#c4c4c4] mt-2">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
@@ -132,7 +133,7 @@ export default function FullscreenPlayer({
             <button
               onClick={onToggleShuffle}
               className={`transition-colors ${
-                isShuffled ? "text-[#1DB954]" : "text-[#b3b3b3] hover:text-white"
+                isShuffled ? "text-[#1DB954]" : "text-[#c4c4c4] hover:text-white"
               }`}
               aria-label="Shuffle"
             >
@@ -140,7 +141,7 @@ export default function FullscreenPlayer({
             </button>
             <button
               onClick={onSkipBack}
-              className="text-[#b3b3b3] hover:text-white transition-colors"
+              className="text-[#c4c4c4] hover:text-white transition-colors"
               aria-label="Previous"
             >
               <SkipBack size={20} className="md:w-8 md:h-8" fill="currentColor" />
@@ -163,7 +164,7 @@ export default function FullscreenPlayer({
             </button>
             <button
               onClick={onSkipForward}
-              className="text-[#b3b3b3] hover:text-white transition-colors"
+              className="text-[#c4c4c4] hover:text-white transition-colors"
               aria-label="Next"
             >
               <SkipForward size={20} className="md:w-8 md:h-8" fill="currentColor" />
@@ -171,7 +172,7 @@ export default function FullscreenPlayer({
             <button
               onClick={onToggleRepeat}
               className={`relative transition-colors ${
-                repeatMode > 0 ? "text-[#1DB954]" : "text-[#b3b3b3] hover:text-white"
+                repeatMode > 0 ? "text-[#1DB954]" : "text-[#c4c4c4] hover:text-white"
               }`}
               aria-label={
                 repeatMode === 0
@@ -199,7 +200,7 @@ export default function FullscreenPlayer({
             <button
               onClick={() => onToggleFavorite && onToggleFavorite(currentSong)}
               className={`transition-colors ${
-                isLiked ? "text-[#1DB954]" : "text-[#b3b3b3] hover:text-white"
+                isLiked ? "text-[#1DB954]" : "text-[#c4c4c4] hover:text-white"
               }`}
               aria-label={isLiked ? "Remove from favorites" : "Add to favorites"}
             >
@@ -209,7 +210,7 @@ export default function FullscreenPlayer({
               <button
                 onClick={toggleMute}
                 onMouseEnter={() => setShowVolume(true)}
-                className="text-[#b3b3b3] hover:text-white transition-colors"
+                className="text-[#c4c4c4] hover:text-white transition-colors"
                 aria-label={volume === 0 ? "Unmute" : "Mute"}
               >
                 {volume === 0 ? (
@@ -234,6 +235,7 @@ export default function FullscreenPlayer({
                     max="100"
                     value={volume}
                     onChange={handleVolumeChange}
+                    aria-label="Volume"
                     className="h-1 md:h-2 w-full bg-[#4d4d4d] rounded-full appearance-none cursor-pointer accent-[#1DB954] hover:accent-[#1ed760] transition-colors"
                     style={{
                       background: `linear-gradient(to right, #1DB954 0%, #1DB954 ${volume}%, #4d4d4d ${volume}%, #4d4d4d 100%)`,

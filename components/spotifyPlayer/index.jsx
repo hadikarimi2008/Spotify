@@ -121,7 +121,10 @@ export default function SpotifyPlayer() {
       audioRef.current.load();
       if (isPlaying) {
         audioRef.current.play().catch((error) => {
-          console.error("Error playing audio:", error);
+          // AbortError = play() interrupted by new load; NotAllowedError = autoplay policy
+          if (error?.name !== "AbortError" && error?.name !== "NotAllowedError") {
+            console.error("Error playing audio:", error);
+          }
         });
       }
     }
@@ -163,8 +166,11 @@ export default function SpotifyPlayer() {
         setCurrentTime(0);
       }
     };
-    const handleError = () => {
-      console.error("Audio playback error");
+    const handleError = (e) => {
+      const mediaError = e?.target?.error;
+      // MEDIA_ERR_ABORTED (1) = load was aborted (e.g. user switched song)
+      if (mediaError?.code === 1) return;
+      console.error("Audio playback error", mediaError?.message || "");
       setIsPlaying(false);
     };
 
@@ -187,7 +193,9 @@ export default function SpotifyPlayer() {
         audioRef.current.pause();
       } else {
         audioRef.current.play().catch((error) => {
-          console.error("Error playing audio:", error);
+          if (error?.name !== "AbortError" && error?.name !== "NotAllowedError") {
+            console.error("Error playing audio:", error);
+          }
         });
       }
       setIsPlaying(!isPlaying);
@@ -454,7 +462,7 @@ export default function SpotifyPlayer() {
                   {currentSong?.title || "No song selected"}
                 </h4>
                 <p
-                  className="text-[11px] text-[#b3b3b3] truncate hover:underline cursor-pointer"
+                  className="text-[11px] text-[#c4c4c4] truncate hover:underline cursor-pointer"
                   onClick={() => {
                     if (currentSong?.artist?.id) {
                       router.push(`/artist/${currentSong.artist.id}`);
@@ -488,7 +496,7 @@ export default function SpotifyPlayer() {
           {/* Progress Bar Mobile */}
           <div className="px-3 pb-2">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] text-[#b3b3b3] min-w-[28px]">
+              <span className="text-[10px] text-[#c4c4c4] min-w-[28px]">
                 {formatTime(currentTime)}
               </span>
               <input
@@ -497,12 +505,13 @@ export default function SpotifyPlayer() {
                 max={duration || 0}
                 value={currentTime}
                 onChange={handleTimeUpdate}
+                aria-label="Seek playback"
                 className="h-1 flex-1 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer accent-white hover:accent-[#1db954] transition-colors"
                 style={{
                   background: `linear-gradient(to right, white 0%, white ${(currentTime / (duration || 1)) * 100}%, #4d4d4d ${(currentTime / (duration || 1)) * 100}%, #4d4d4d 100%)`,
                 }}
               />
-              <span className="text-[10px] text-[#b3b3b3] min-w-[28px] text-right">
+              <span className="text-[10px] text-[#c4c4c4] min-w-[28px] text-right">
                 {formatTime(duration)}
               </span>
             </div>
@@ -514,7 +523,7 @@ export default function SpotifyPlayer() {
               <button
                 onClick={toggleShuffle}
                 className={`transition-colors ${
-                  isShuffled ? "text-[#1DB954]" : "text-[#b3b3b3]"
+                  isShuffled ? "text-[#1DB954]" : "text-[#c4c4c4]"
                 }`}
                 aria-label="Shuffle"
               >
@@ -525,7 +534,7 @@ export default function SpotifyPlayer() {
               </button>
               <button
                 onClick={handleSkipBack}
-                className="text-[#b3b3b3] active:scale-95 transition-transform"
+                className="text-[#c4c4c4] active:scale-95 transition-transform"
                 aria-label="Previous"
               >
                 <SkipBack size={20} fill="currentColor" />
@@ -548,7 +557,7 @@ export default function SpotifyPlayer() {
               </button>
               <button
                 onClick={handleSkipForward}
-                className="text-[#b3b3b3] active:scale-95 transition-transform"
+                className="text-[#c4c4c4] active:scale-95 transition-transform"
                 aria-label="Next"
               >
                 <SkipForward size={20} fill="currentColor" />
@@ -556,7 +565,7 @@ export default function SpotifyPlayer() {
               <button
                 onClick={toggleRepeat}
                 className={`relative transition-colors ${
-                  repeatMode > 0 ? "text-[#1DB954]" : "text-[#b3b3b3]"
+                  repeatMode > 0 ? "text-[#1DB954]" : "text-[#c4c4c4]"
                 }`}
                 aria-label={
                   repeatMode === 0
@@ -582,7 +591,7 @@ export default function SpotifyPlayer() {
             <div className="flex items-center gap-2">
               <button
                 onClick={toggleMute}
-                className="text-[#b3b3b3] active:scale-95 transition-transform"
+                className="text-[#c4c4c4] active:scale-95 transition-transform"
                 aria-label={volume === 0 ? "Unmute" : "Mute"}
               >
                 {volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
@@ -593,6 +602,7 @@ export default function SpotifyPlayer() {
                 max="100"
                 value={volume}
                 onChange={handleVolumeChange}
+                aria-label="Volume"
                 className="h-1 flex-1 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer accent-white active:accent-[#1db954]"
                 style={{
                   background: `linear-gradient(to right, white 0%, white ${volume}%, #4d4d4d ${volume}%, #4d4d4d 100%)`,
@@ -601,7 +611,7 @@ export default function SpotifyPlayer() {
               <button
                 onClick={() => currentSong && setIsFullscreen(true)}
                 disabled={!currentSong}
-                className="text-[#b3b3b3] active:scale-95 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                className="text-[#c4c4c4] active:scale-95 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Fullscreen"
               >
                 <Maximize2 size={16} />
@@ -640,7 +650,7 @@ export default function SpotifyPlayer() {
                 {currentSong?.title || "No song selected"}
               </h4>
               <p
-                className="text-[12px] text-[#b3b3b3] hover:underline hover:text-white cursor-pointer transition-colors truncate"
+                className="text-[12px] text-[#c4c4c4] hover:underline hover:text-white cursor-pointer transition-colors truncate"
                 onClick={() => {
                   if (currentSong?.artist?.id) {
                     router.push(`/artist/${currentSong.artist.id}`);
@@ -656,7 +666,7 @@ export default function SpotifyPlayer() {
               className={`transition-colors shrink-0 hidden lg:block ${
                 currentSong && favoriteIds.has(currentSong.id)
                   ? "text-[#1DB954] hover:text-[#1ed760]"
-                  : "text-[#b3b3b3] hover:text-white"
+                  : "text-[#c4c4c4] hover:text-white"
               } disabled:opacity-50 disabled:cursor-not-allowed`}
               aria-label={
                 currentSong && favoriteIds.has(currentSong.id)
@@ -683,7 +693,7 @@ export default function SpotifyPlayer() {
                 className={`transition-colors ${
                   isShuffled
                     ? "text-[#1DB954]"
-                    : "text-[#b3b3b3] hover:text-white"
+                    : "text-[#c4c4c4] hover:text-white"
                 }`}
                 aria-label="Shuffle"
               >
@@ -694,7 +704,7 @@ export default function SpotifyPlayer() {
               </button>
               <button
                 onClick={handleSkipBack}
-                className="text-[#b3b3b3] hover:text-white transition-colors"
+                className="text-[#c4c4c4] hover:text-white transition-colors"
                 aria-label="Previous"
               >
                 <SkipBack size={22} fill="currentColor" />
@@ -717,7 +727,7 @@ export default function SpotifyPlayer() {
               </button>
               <button
                 onClick={handleSkipForward}
-                className="text-[#b3b3b3] hover:text-white transition-colors"
+                className="text-[#c4c4c4] hover:text-white transition-colors"
                 aria-label="Next"
               >
                 <SkipForward size={22} fill="currentColor" />
@@ -727,7 +737,7 @@ export default function SpotifyPlayer() {
                 className={`relative transition-colors ${
                   repeatMode > 0
                     ? "text-[#1DB954]"
-                    : "text-[#b3b3b3] hover:text-white"
+                    : "text-[#c4c4c4] hover:text-white"
                 }`}
                 title={
                   repeatMode === 0
@@ -758,7 +768,7 @@ export default function SpotifyPlayer() {
 
             {/* Progress Bar */}
             <div className="flex items-center gap-3 w-full">
-              <span className="text-[11px] text-[#b3b3b3] min-w-[35px] text-right">
+              <span className="text-[11px] text-[#c4c4c4] min-w-[35px] text-right">
                 {formatTime(currentTime)}
               </span>
               <input
@@ -767,12 +777,13 @@ export default function SpotifyPlayer() {
                 max={duration || 0}
                 value={currentTime}
                 onChange={handleTimeUpdate}
+                aria-label="Seek playback"
                 className="h-1 flex-1 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer accent-white hover:accent-[#1db954] transition-colors"
                 style={{
                   background: `linear-gradient(to right, white 0%, white ${(currentTime / (duration || 1)) * 100}%, #4d4d4d ${(currentTime / (duration || 1)) * 100}%, #4d4d4d 100%)`,
                 }}
               />
-              <span className="text-[11px] text-[#b3b3b3] min-w-[35px]">
+              <span className="text-[11px] text-[#c4c4c4] min-w-[35px]">
                 {formatTime(duration)}
               </span>
             </div>
@@ -784,7 +795,7 @@ export default function SpotifyPlayer() {
               <button
                 onClick={toggleMute}
                 onMouseEnter={() => setShowVolume(true)}
-                className="text-[#b3b3b3] hover:text-white transition-colors"
+                className="text-[#c4c4c4] hover:text-white transition-colors"
                 aria-label={volume === 0 ? "Unmute" : "Mute"}
               >
                 {volume === 0 ? <VolumeX size={18} /> : <Volume2 size={18} />}
@@ -807,6 +818,7 @@ export default function SpotifyPlayer() {
                     max="100"
                     value={volume}
                     onChange={handleVolumeChange}
+                    aria-label="Volume"
                     className="h-1 w-full bg-[#4d4d4d] rounded-full appearance-none cursor-pointer accent-white hover:accent-[#1db954] transition-colors"
                     style={{
                       background: `linear-gradient(to right, white 0%, white ${volume}%, #4d4d4d ${volume}%, #4d4d4d 100%)`,
@@ -819,7 +831,7 @@ export default function SpotifyPlayer() {
               <button
                 onClick={() => currentSong && setIsFullscreen(true)}
                 disabled={!currentSong}
-                className="text-[#b3b3b3] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed "
+                className="text-[#c4c4c4] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed "
                 aria-label="Fullscreen"
               >
                 <Maximize2 size={18} />

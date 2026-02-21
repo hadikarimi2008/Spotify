@@ -48,7 +48,7 @@ export default function Error({ error, reset }) {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             Something went wrong
           </h1>
-          <p className="text-[#b3b3b3] text-sm md:text-base mb-6">
+          <p className="text-[#c4c4c4] text-sm md:text-base mb-6">
             {error?.message || "An unexpected error occurred"}
           </p>
         </div>
