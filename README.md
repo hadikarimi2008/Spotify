@@ -7,9 +7,12 @@
 > Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
 > Published on: Saturday, February 21, 2026
 
+**Report Link**: [View Full Analysis](https://pagespeed.web.dev/analysis/https-spotify-three-bay-vercel-app/kytf7b5g09?form_factor=desktop)
 
 
 
+
+<img width="3840" height="2160" alt="Spotify-Logo" src="https://github.com/user-attachments/assets/759d3454-4d43-4743-8fbb-b3fa3b0f80b6" />
 
 
 
