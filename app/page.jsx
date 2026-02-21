@@ -1,7 +1,13 @@
+/**
+ * @project     Spotify Clone - Next.js
+ * @author      Hadi (https://github.com/hadikarimi2008)
+ * @copyright   Copyright (c) 2026 Hadi. All rights reserved.
+ * @license     Proprietary - No unauthorized copying or distribution.
+ * @published   February 21, 2026
+ */
+
 import HeroSection from "@/components/heroSection";
-import SpotifyPlayer from "@/components/spotifyPlayer";
 import YourLibrary from "@/components/yourLibrary";
-import MobileNavbar from "@/components/mobileNavbar";
 
 export default function Home() {
   return (

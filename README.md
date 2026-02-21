@@ -1,3 +1,19 @@
+## ⚠️ License & Copyright
+
+**Copyright (c) 2026 Hadi. All rights reserved.**
+
+> [!IMPORTANT]
+> This project is **NOT** open-source. All rights belong to **Hadi**. 
+> Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
+> Published on: Saturday, February 21, 2026
+
+
+
+
+
+
+
+
 # Spotify Clone - Music Streaming Platform
 
 A full-featured music streaming web application built with Next.js, featuring a modern UI inspired by Spotify, complete user authentication, music playback, admin dashboard, and comprehensive analytics.

@@ -1,3 +1,11 @@
+/**
+ * @project     Spotify Clone - Next.js
+ * @author      Hadi (https://github.com/hadikarimi2008)
+ * @copyright   Copyright (c) 2026 Hadi. All rights reserved.
+ * @license     Proprietary - No unauthorized copying or distribution.
+ * @published   February 21, 2026
+ */
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -866,7 +874,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white mb-[60%] md:mb-[0%]">
       <div className="max-w-7xl mx-auto p-4 md:p-6">
         <div className="mb-6 md:mb-8">
           <h1 className="text-2xl md:text-4xl font-bold mb-2">Admin Dashboard</h1>

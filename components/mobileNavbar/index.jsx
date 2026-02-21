@@ -1,13 +1,31 @@
+/**
+ * @project     Spotify Clone - Next.js
+ * @author      Hadi (https://github.com/hadikarimi2008)
+ * @copyright   Copyright (c) 2026 Hadi. All rights reserved.
+ * @license     Proprietary - No unauthorized copying or distribution.
+ * @published   February 21, 2026
+ */
+
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Home, Music, User, Bell, LogOut, Settings, X, Search } from "lucide-react";
+import {
+  Home,
+  Music,
+  User,
+  Bell,
+  LogOut,
+  Settings,
+  X,
+  Search,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import YourLibrary from "@/components/yourLibrary";
 import { searchSongs } from "@/app/actions";
+import DeveloperModal from "../DeveloperModal";
 
 export default function MobileNavbar() {
   const router = useRouter();
@@ -170,7 +188,10 @@ export default function MobileNavbar() {
 
       {/* Notifications Overlay */}
       {showNotifications && (
-        <div className="md:hidden fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm" onClick={() => setShowNotifications(false)}>
+        <div
+          className="md:hidden fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowNotifications(false)}
+        >
           <div
             className="absolute bottom-0 left-0 right-0 bg-[#121212] rounded-t-2xl border-t border-[#2a2a2a] max-h-[60vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
@@ -193,7 +214,10 @@ export default function MobileNavbar() {
 
       {/* Profile Overlay */}
       {showProfile && (
-        <div className="md:hidden fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm" onClick={() => setShowProfile(false)}>
+        <div
+          className="md:hidden fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowProfile(false)}
+        >
           <div
             className="absolute bottom-0 left-0 right-0 bg-[#121212] rounded-t-2xl border-t border-[#2a2a2a] max-h-[60vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
@@ -233,7 +257,10 @@ export default function MobileNavbar() {
                       <h4 className="text-white font-bold text-lg">
                         {session.user.name || session.user.email}
                       </h4>
-                      <p className="text-[#b3b3b3] text-sm">{session.user.email}</p>
+                      <p className="text-[#b3b3b3] text-sm flex items-center">
+                        {session.user.email}
+                         <DeveloperModal/>
+                      </p>
                     </div>
                   </div>
                   <Link
@@ -244,6 +271,7 @@ export default function MobileNavbar() {
                     <User size={20} className="text-[#b3b3b3]" />
                     <span className="text-white font-medium">View Profile</span>
                   </Link>
+                  <div></div>
                   {session.user.isAdmin && (
                     <Link
                       href="/admin/dashboard"
@@ -251,7 +279,9 @@ export default function MobileNavbar() {
                       className="flex items-center gap-3 p-3 bg-[#1a1a1a] hover:bg-[#242424] rounded-lg transition-colors"
                     >
                       <Settings size={20} className="text-[#1DB954]" />
-                      <span className="text-white font-medium">Admin Panel</span>
+                      <span className="text-white font-medium">
+                        Admin Panel
+                      </span>
                     </Link>
                   )}
                   <button
@@ -284,8 +314,14 @@ export default function MobileNavbar() {
 
       {/* Search Overlay */}
       {showSearch && (
-        <div className="md:hidden fixed inset-0 z-[60] bg-black" onClick={() => setShowSearch(false)}>
-          <div className="h-full flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="md:hidden fixed inset-0 z-[60] bg-black"
+          onClick={() => setShowSearch(false)}
+        >
+          <div
+            className="h-full flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="p-4 border-b border-[#2a2a2a] flex items-center gap-3 sticky top-0 bg-black z-10">
               <button
                 onClick={() => setShowSearch(false)}
@@ -293,7 +329,11 @@ export default function MobileNavbar() {
               >
                 <X size={24} />
               </button>
-              <form onSubmit={handleSearchSubmit} className="flex-1 relative" ref={searchRef}>
+              <form
+                onSubmit={handleSearchSubmit}
+                className="flex-1 relative"
+                ref={searchRef}
+              >
                 <Search
                   size={20}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b3b3b3]"
@@ -302,7 +342,9 @@ export default function MobileNavbar() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => searchQuery.trim() && setShowSearchResults(true)}
+                  onFocus={() =>
+                    searchQuery.trim() && setShowSearchResults(true)
+                  }
                   className="w-full h-12 bg-[#242424] text-white rounded-full pl-11 pr-4 outline-none border border-transparent focus:border-white focus:bg-[#2a2a2a] transition-all placeholder-[#757575]"
                   placeholder="What do you want to play?"
                   autoFocus
@@ -311,19 +353,21 @@ export default function MobileNavbar() {
             </div>
             <div className="flex-1 overflow-y-auto relative">
               {showSearchResults && searchResults && (
-                <div
-                  ref={resultsRef}
-                  className="p-4 space-y-4"
-                >
+                <div ref={resultsRef} className="p-4 space-y-4">
                   {searchResults.songs.length > 0 && (
                     <div>
-                      <h3 className="text-white font-bold text-lg mb-3">Songs</h3>
+                      <h3 className="text-white font-bold text-lg mb-3">
+                        Songs
+                      </h3>
                       <div className="space-y-1">
                         {searchResults.songs.slice(0, 10).map((song) => (
                           <div
                             key={song.id}
                             onClick={() => {
-                              if (typeof window !== "undefined" && window.playSong) {
+                              if (
+                                typeof window !== "undefined" &&
+                                window.playSong
+                              ) {
                                 window.playSong(song);
                               }
                               setShowSearch(false);
@@ -347,8 +391,12 @@ export default function MobileNavbar() {
                               )}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-white text-sm font-medium truncate">{song.title}</p>
-                              <p className="text-[#b3b3b3] text-xs truncate">{song.artist?.name}</p>
+                              <p className="text-white text-sm font-medium truncate">
+                                {song.title}
+                              </p>
+                              <p className="text-[#b3b3b3] text-xs truncate">
+                                {song.artist?.name}
+                              </p>
                             </div>
                           </div>
                         ))}
@@ -358,7 +406,9 @@ export default function MobileNavbar() {
 
                   {searchResults.artists.length > 0 && (
                     <div>
-                      <h3 className="text-white font-bold text-lg mb-3">Artists</h3>
+                      <h3 className="text-white font-bold text-lg mb-3">
+                        Artists
+                      </h3>
                       <div className="space-y-1">
                         {searchResults.artists.slice(0, 10).map((artist) => (
                           <div
@@ -385,7 +435,9 @@ export default function MobileNavbar() {
                                 <div className="w-full h-full bg-gradient-to-br from-purple-700 to-blue-900" />
                               )}
                             </div>
-                            <p className="text-white text-sm font-medium truncate">{artist.name}</p>
+                            <p className="text-white text-sm font-medium truncate">
+                              {artist.name}
+                            </p>
                           </div>
                         ))}
                       </div>
@@ -394,7 +446,9 @@ export default function MobileNavbar() {
 
                   {searchResults.albums.length > 0 && (
                     <div>
-                      <h3 className="text-white font-bold text-lg mb-3">Albums</h3>
+                      <h3 className="text-white font-bold text-lg mb-3">
+                        Albums
+                      </h3>
                       <div className="space-y-1">
                         {searchResults.albums.slice(0, 10).map((album) => (
                           <div
@@ -422,8 +476,12 @@ export default function MobileNavbar() {
                               )}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-white text-sm font-medium truncate">{album.title}</p>
-                              <p className="text-[#b3b3b3] text-xs truncate">{album.artist?.name}</p>
+                              <p className="text-white text-sm font-medium truncate">
+                                {album.title}
+                              </p>
+                              <p className="text-[#b3b3b3] text-xs truncate">
+                                {album.artist?.name}
+                              </p>
                             </div>
                           </div>
                         ))}
@@ -443,7 +501,9 @@ export default function MobileNavbar() {
               )}
               {!showSearchResults && searchQuery.trim().length === 0 && (
                 <div className="flex items-center justify-center h-full">
-                  <p className="text-[#b3b3b3] text-sm">Start typing to search...</p>
+                  <p className="text-[#b3b3b3] text-sm">
+                    Start typing to search...
+                  </p>
                 </div>
               )}
             </div>
@@ -453,4 +513,3 @@ export default function MobileNavbar() {
     </>
   );
 }
-

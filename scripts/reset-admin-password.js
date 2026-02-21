@@ -1,3 +1,11 @@
+/**
+ * @project     Spotify Clone - Next.js
+ * @author      Hadi (https://github.com/hadikarimi2008)
+ * @copyright   Copyright (c) 2026 Hadi. All rights reserved.
+ * @license     Proprietary - No unauthorized copying or distribution.
+ * @published   February 21, 2026
+ */
+
 const { PrismaClient } = require("@prisma/client");
 const { PrismaPg } = require("@prisma/adapter-pg");
 const { Pool } = require("pg");
@@ -64,4 +72,3 @@ async function resetAdminPassword() {
 }
 
 resetAdminPassword();
-
