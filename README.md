@@ -7,9 +7,24 @@
 > Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
 > Published on: Saturday, February 21, 2026
 
+ ## user for test: gmail: user@gmail.com | password: 123456789  
+
+**Report Link**: [View Full Analysis](https://pagespeed.web.dev/analysis/https-spotify-three-bay-vercel-app/kytf7b5g09?form_factor=desktop)  
+
+## Mobile Analysis  
+
+<img width="1536" height="1024" alt="Copilot_20260222_015511" src="https://github.com/user-attachments/assets/a2a727ce-3cb8-4ca8-8dc7-c9a0b2e5d627" />  
+
+## Desktop Analysis  
+
+<img width="1536" height="1024" alt="Copilot_20260222_015844" src="https://github.com/user-attachments/assets/6d5fc0c9-cb03-4372-8989-df9085f063a6" />  
 
 
 
+
+
+
+<img width="3840" height="2160" alt="Spotify-Logo" src="https://github.com/user-attachments/assets/759d3454-4d43-4743-8fbb-b3fa3b0f80b6" />
 
 
 

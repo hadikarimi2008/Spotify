@@ -6,13 +6,13 @@
  * @published   February 21, 2026
  */
 
-import LoginForm from '@/components/loginForm'
-import React from 'react'
+import LoginForm from "@/components/loginForm";
+import React from "react";
 
 export default function page() {
   return (
-    <div>
-        <LoginForm />
+    <div className="mb-[40%] md:mb-[0%]">
+      <LoginForm />
     </div>
-  )
+  );
 }
