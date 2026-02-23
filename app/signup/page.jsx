@@ -87,7 +87,13 @@ export default function SignupForm() {
   return (
     <div className="flex flex-col items-center min-h-screen bg-black text-white p-4 md:p-8">
       <div className="mb-6 md:mb-10 mt-2 md:mt-4">
-        <Image src={spotify} alt="Spotify" width={35} className="md:w-[40px]" priority />
+        <Image
+          src={spotify}
+          alt="Spotify"
+          width={35}
+          className="md:w-[40px]"
+          priority
+        />
       </div>
 
       <div className="w-full max-w-[400px] px-4 md:px-0">
@@ -110,7 +116,9 @@ export default function SignupForm() {
               What is your email address?
             </h1>
             <div className="flex flex-col gap-2">
-              <label htmlFor="signup-email" className="text-sm font-bold">Email address</label>
+              <label htmlFor="signup-email" className="text-sm font-bold">
+                Email address
+              </label>
               <input
                 id="signup-email"
                 required
@@ -122,7 +130,10 @@ export default function SignupForm() {
                 className="w-full p-3 bg-[#121212] border border-[#727272] rounded-[4px] focus:border-[#1DB954] focus:border-2 outline-none placeholder:text-[#a7a7a7]"
               />
             </div>
-            <button type="submit" className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
+            <button
+              type="submit"
+              className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform"
+            >
               Next
             </button>
           </form>
@@ -134,7 +145,9 @@ export default function SignupForm() {
               Create a password
             </h1>
             <div className="flex flex-col gap-2">
-              <label htmlFor="signup-password" className="text-sm font-bold">Password</label>
+              <label htmlFor="signup-password" className="text-sm font-bold">
+                Password
+              </label>
               <input
                 id="signup-password"
                 required
@@ -149,7 +162,10 @@ export default function SignupForm() {
                 Your password must be at least 8 characters long.
               </p>
             </div>
-            <button type="submit" className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
+            <button
+              type="submit"
+              className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform"
+            >
               Next
             </button>
           </form>
@@ -161,7 +177,9 @@ export default function SignupForm() {
               Tell us about yourself
             </h1>
             <div className="flex flex-col gap-2">
-              <label htmlFor="signup-name" className="text-sm font-bold">Name</label>
+              <label htmlFor="signup-name" className="text-sm font-bold">
+                Name
+              </label>
               <p className="text-xs text-[#a7a7a7]">
                 This name will appear on your profile.
               </p>
@@ -175,7 +193,10 @@ export default function SignupForm() {
                 className="w-full p-3 bg-[#121212] border border-[#727272] rounded-[4px] focus:border-[#1DB954] focus:border-2 outline-none"
               />
             </div>
-            <button type="submit" className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
+            <button
+              type="submit"
+              className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform"
+            >
               Next
             </button>
           </form>
@@ -187,8 +208,14 @@ export default function SignupForm() {
               What's your date of birth?
             </h1>
             <div className="flex flex-col gap-2">
-              <span id="signup-dob-label" className="text-sm font-bold">Date of birth</span>
-              <div className="flex gap-3" role="group" aria-labelledby="signup-dob-label">
+              <span id="signup-dob-label" className="text-sm font-bold">
+                Date of birth
+              </span>
+              <div
+                className="flex gap-3"
+                role="group"
+                aria-labelledby="signup-dob-label"
+              >
                 <input
                   id="signup-year"
                   required
@@ -233,7 +260,10 @@ export default function SignupForm() {
                 />
               </div>
             </div>
-            <button type="submit" className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
+            <button
+              type="submit"
+              className="w-fit self-end bg-[#1DB954] text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform"
+            >
               Next
             </button>
           </form>
