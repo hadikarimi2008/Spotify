@@ -277,27 +277,6 @@ Use the provided script to create an admin user:
 node scripts/set-admin.js
 ```
 
-## Environment Variables
-
-Create a `.env` file in the root directory with the following variables:
-
-```env
-# Database
-DATABASE_URL="postgresql://user:password@localhost:5432/spotify?schema=public"
-
-# NextAuth
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-key-here"
-
-# Site Configuration
-NEXT_PUBLIC_SITE_URL="http://localhost:3000"
-
-# SEO Verification (Optional)
-GOOGLE_VERIFICATION=""
-YANDEX_VERIFICATION=""
-YAHOO_VERIFICATION=""
-```
-
 ## Database Schema
 
 The application uses Prisma ORM with the following main models:
