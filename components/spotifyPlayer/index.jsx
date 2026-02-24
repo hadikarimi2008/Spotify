@@ -42,7 +42,7 @@ export default function SpotifyPlayer() {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(70);
   const [isShuffled, setIsShuffled] = useState(false);
-  const [repeatMode, setRepeatMode] = useState(0); // 0: off, 1: all, 2: one
+  const [repeatMode, setRepeatMode] = useState(0);
   const [showVolume, setShowVolume] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState(new Set());
@@ -116,19 +116,28 @@ export default function SpotifyPlayer() {
   }, [volume]);
 
   useEffect(() => {
-    if (audioRef.current && currentSong) {
-      audioRef.current.src = currentSong.songUrl;
-      audioRef.current.load();
-      if (isPlaying) {
-        audioRef.current.play().catch((error) => {
-          // AbortError = play() interrupted by new load; NotAllowedError = autoplay policy
-          if (error?.name !== "AbortError" && error?.name !== "NotAllowedError") {
-            console.error("Error playing audio:", error);
-          }
-        });
-      }
+    const audio = audioRef.current;
+    if (!audio || !currentSong) return;
+
+    audio.src = currentSong.songUrl;
+    audio.load();
+    setCurrentTime(0);
+  }, [currentSong]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !currentSong) return;
+
+    if (isPlaying) {
+      audio.play().catch((error) => {
+        if (error?.name !== "AbortError" && error?.name !== "NotAllowedError") {
+          console.error("Error playing audio:", error);
+        }
+      });
+    } else {
+      audio.pause();
     }
-  }, [currentSong, isPlaying]);
+  }, [isPlaying, currentSong]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -141,7 +150,6 @@ export default function SpotifyPlayer() {
       }
     };
     const handleEnded = async () => {
-      // Track full play in listening history
       if (session?.user?.id && currentSong) {
         try {
           const { addToListeningHistory } =
@@ -168,7 +176,6 @@ export default function SpotifyPlayer() {
     };
     const handleError = (e) => {
       const mediaError = e?.target?.error;
-      // MEDIA_ERR_ABORTED (1) = load was aborted (e.g. user switched song)
       if (mediaError?.code === 1) return;
       console.error("Audio playback error", mediaError?.message || "");
       setIsPlaying(false);
@@ -188,19 +195,8 @@ export default function SpotifyPlayer() {
   }, [repeatMode, isShuffled, currentSong, session]);
 
   const togglePlay = useCallback(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch((error) => {
-          if (error?.name !== "AbortError" && error?.name !== "NotAllowedError") {
-            console.error("Error playing audio:", error);
-          }
-        });
-      }
-      setIsPlaying(!isPlaying);
-    }
-  }, [isPlaying]);
+    setIsPlaying((prev) => !prev);
+  }, []);
 
   const handleSkipBack = useCallback(() => {
     if (songsList.length === 0) return;
@@ -288,7 +284,6 @@ export default function SpotifyPlayer() {
     [session?.user?.id, favoriteIds],
   );
 
-  // Listen for favorite updates
   useEffect(() => {
     const handleFavoriteUpdate = (event) => {
       const { songId, added } = event.detail;
@@ -331,7 +326,7 @@ export default function SpotifyPlayer() {
     if (volume > 0) {
       setVolume(0);
     } else {
-      setVolume(70);
+      setVolume(70); 
     }
   };
 
@@ -353,37 +348,42 @@ export default function SpotifyPlayer() {
 
   const playSong = useCallback(
     async (song) => {
+      const isSameSong = currentSong?.id === song.id;
       setCurrentSong(song);
       setIsPlaying(true);
 
-      const songIndex = songsList.findIndex((s) => s.id === song.id);
-      if (songIndex !== -1) {
-        setCurrentIndex(songIndex);
-      } else {
-        const { getSongs } = await import("@/app/actions");
-        const songs = await getSongs(20);
-        setSongsList(songs);
-        const newIndex = songs.findIndex((s) => s.id === song.id);
-        setCurrentIndex(newIndex !== -1 ? newIndex : 0);
-      }
-
-      try {
-        const { incrementPlayCount } = await import("@/app/actions");
-        await incrementPlayCount(song.id);
-
-        if (session?.user?.id) {
-          await addToRecentlyPlayed(session.user.id, song.id);
-
-          // Add to listening history
-          const { addToListeningHistory } =
-            await import("@/app/dashboard/actions");
-          await addToListeningHistory(session.user.id, song.id, song.duration);
+      if (!isSameSong) {
+        const songIndex = songsList.findIndex((s) => s.id === song.id);
+        if (songIndex !== -1) {
+          setCurrentIndex(songIndex);
+        } else {
+          const { getSongs } = await import("@/app/actions");
+          const songs = await getSongs(20);
+          setSongsList(songs);
+          const newIndex = songs.findIndex((s) => s.id === song.id);
+          setCurrentIndex(newIndex !== -1 ? newIndex : 0);
         }
-      } catch (error) {
-        console.error("Error updating play count:", error);
+
+        try {
+          const { incrementPlayCount } = await import("@/app/actions");
+          await incrementPlayCount(song.id);
+
+          if (session?.user?.id) {
+            await addToRecentlyPlayed(session.user.id, song.id);
+            const { addToListeningHistory } =
+              await import("@/app/dashboard/actions");
+            await addToListeningHistory(
+              session.user.id,
+              song.id,
+              song.duration,
+            );
+          }
+        } catch (error) {
+          console.error("Error updating play count:", error);
+        }
       }
     },
-    [songsList, session],
+    [songsList, session, currentSong],
   );
 
   useEffect(() => {
@@ -403,7 +403,6 @@ export default function SpotifyPlayer() {
     <>
       <audio ref={audioRef} preload="metadata" />
 
-      {/* Fullscreen Player */}
       {isFullscreen && currentSong && (
         <FullscreenPlayer
           currentSong={currentSong}
@@ -431,10 +430,8 @@ export default function SpotifyPlayer() {
       )}
 
       <div className="fixed bottom-16 md:bottom-0 left-0 right-0 bg-black border-t border-[#282828 shadow-2xl">
-        {/* Mobile Layout */}
         <div className="md:hidden">
           <div className="px-3 py-2.5 flex items-center justify-between gap-2">
-            {/* Song Info */}
             <div className="flex items-center gap-2.5 flex-1 min-w-0">
               <div className="relative w-12 h-12 bg-[#282828] rounded-md overflow-hidden shrink-0">
                 {currentSong?.imageUrl ? (
@@ -474,7 +471,6 @@ export default function SpotifyPlayer() {
               </div>
             </div>
 
-            {/* Play Button */}
             <button
               onClick={togglePlay}
               disabled={!currentSong}
@@ -493,7 +489,6 @@ export default function SpotifyPlayer() {
             </button>
           </div>
 
-          {/* Progress Bar Mobile */}
           <div className="px-3 pb-2">
             <div className="flex items-center gap-2">
               <span className="text-[10px] text-[#c4c4c4] min-w-[28px]">
@@ -517,7 +512,6 @@ export default function SpotifyPlayer() {
             </div>
           </div>
 
-          {/* Mobile Controls */}
           <div className="px-3 pb-3">
             <div className="flex items-center justify-center gap-4 mb-3">
               <button
@@ -587,7 +581,6 @@ export default function SpotifyPlayer() {
               </button>
             </div>
 
-            {/* Mobile Volume Control */}
             <div className="flex items-center gap-2">
               <button
                 onClick={toggleMute}
@@ -620,9 +613,7 @@ export default function SpotifyPlayer() {
           </div>
         </div>
 
-        {/* Desktop Layout */}
         <div className="hidden md:flex items-center justify-between px-6 h-[90px] gap-4">
-          {/* Left: Song Info */}
           <div className="flex items-center gap-4 w-[30%] min-w-0">
             <div className="relative w-14 h-14 bg-[#282828] rounded-md overflow-hidden shrink-0">
               {currentSong?.imageUrl ? (
@@ -685,7 +676,6 @@ export default function SpotifyPlayer() {
             </button>
           </div>
 
-          {/* Center: Controls */}
           <div className="flex flex-col items-center flex-1 max-w-[722px] gap-2">
             <div className="flex items-center gap-2">
               <button
@@ -766,7 +756,6 @@ export default function SpotifyPlayer() {
               </button>
             </div>
 
-            {/* Progress Bar */}
             <div className="flex items-center gap-3 w-full">
               <span className="text-[11px] text-[#c4c4c4] min-w-[35px] text-right">
                 {formatTime(currentTime)}
@@ -789,7 +778,6 @@ export default function SpotifyPlayer() {
             </div>
           </div>
 
-          {/* Right: Volume & More */}
           <div className="flex items-center gap-2 w-[30%] justify-end">
             <div className="flex items-center gap-2 group relative">
               <button
