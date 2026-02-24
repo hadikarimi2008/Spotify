@@ -344,6 +344,15 @@ All models include proper relationships, indexes for performance, and cascade de
 
 ### Search & Discovery
 
+
+
+
+![search-gif](https://github.com/user-attachments/assets/c68b9c1a-1ead-4eec-9126-9d75e5495d1a)
+
+
+
+
+
 - Full-text search across multiple content types
 - Debounced search for performance
 - Real-time search results
