@@ -1,13 +1,18 @@
 ## ⚠️ License & Copyright
 
-**MIT License**
 
 > [!IMPORTANT]
-> This project is **NOT** open-source. All rights belong to **Hadi**. 
-> Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
+> MIT License
 > Published on: Saturday, February 21, 2026
 
- ## user for test: gmail: user@gmail.com | password: 123456789  
+## Demo Access
+
+You can test the application using:
+- **Email**: `user@gmail.com`
+- **Password**: `123456789`
+
+> ⚠️ This is a demo account. Please do not change the password.
+> For security reasons, use this account only for testing.
 
 **Report Link**: [View Full Analysis](https://pagespeed.web.dev/analysis/https-spotify-three-bay-vercel-app/kytf7b5g09?form_factor=desktop)  
 
