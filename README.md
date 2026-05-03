@@ -3,7 +3,7 @@
 
 > [!IMPORTANT]
 > ## License
-MIT License - feel free to use, modify, and distribute this code.
+>MIT License - feel free to use, modify, and distribute this code.
 > Published on: Saturday, February 21, 2026
 
 ## Demo Access
