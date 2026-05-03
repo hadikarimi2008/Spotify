@@ -470,7 +470,6 @@ This project was primarily developed by Hadi, who designed and implemented the c
 
 ## Why this project?
 
-I built Techno Shop (original e-commerce) to show creativity.  
 I built this to show I can reverse-engineer and rebuild a complex platform like Spotify **on my own**.
 
 **License**: This project is for educational and portfolio purposes.
