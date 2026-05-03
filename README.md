@@ -1,6 +1,6 @@
 ## ⚠️ License & Copyright
 
-**Copyright (c) 2026 Hadi. All rights reserved.**
+**MIT License**
 
 > [!IMPORTANT]
 > This project is **NOT** open-source. All rights belong to **Hadi**. 
